@@ -1,4 +1,34 @@
 extends ./common
 
 block content
-  h1 Le tan
+  h1.text-center.my-4 Danh sách phòng
+
+  .d-flex.justify-content-around.flex-wrap.m-4
+    each phong in dsPhong
+      .phong
+        .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAU}`)
+          p.phong-text= phong.MA_PHONG
+        .phong-trangthai(style=`background-color: ${phong.MAMAU}`)
+  hr
+  .d-flex.m-4.justify-content-around
+    div
+      .text-center
+        b(style="font-size: 20px") Loại phòng
+      .my-2
+        each loaiPhong in dsLoaiPhong
+          .d-flex.align-items-center.my-2
+            div.mr-2
+              .chuthich-loaiphong(style=`background-color: ${loaiPhong.MAU}`)
+            .d-flex.align-items-center
+              p.my-auto= loaiPhong.TEN_LOAIPHONG
+    div
+      .text-center
+        b(style="font-size: 20px") Trạng thái phòng
+      .my-2
+        each trangThai in dsTrangThai
+          .d-flex.align-items-center.my-2
+            div.mr-2
+              .chuthich-trangthai(style=`background-color: ${trangThai.MAMAU}`)
+            .d-flex.align-items-center
+              p.my-auto= trangThai.TEN_TRANGTHAI
+

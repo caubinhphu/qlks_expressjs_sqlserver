@@ -8,15 +8,17 @@ module.exports.index = async (req, res, next) => {
   try {
     await pool.connect();
     var request = new sql.Request(pool);
-    var result = await request.query('SELECT * FROM PHONG');
+    var result = await request.execute('SP_DANHSACHPHONG_TRANGTHAI');
   } catch (err) {
     next(err);
   } finally {
     await pool.close();
   }
 
-  // res.json(result.recordset);
-  // res.render('letan/index', {
-  //   title: 'Le tan'
-  // })
+  res.render('letan/index', {
+    title: 'Danh sách phòng',
+    dsPhong: result.recordsets[0],
+    dsTrangThai: result.recordsets[1],
+    dsLoaiPhong: result.recordsets[2]
+  })
 }
