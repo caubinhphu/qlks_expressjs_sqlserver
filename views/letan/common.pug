@@ -7,6 +7,22 @@ html(lang="vi")
     script(src="/scripts/popper.min.js")
     script(src="/scripts/bootstrap.min.js")
   body
-    block header
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+      a.navbar-brand(href='#') Vitamin Sea Hotel
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+          li.nav-item(class=active==='tab1'?'active':'')
+            a.nav-link(href='#') Phòng
+          li.nav-item(class=active==='tab2'?'active':'')
+            a.nav-link(href='#') Khách
+          li.nav-item.dropdown(class=active==='tab3'?'active':'')
+            a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+              | Doanh thu
+            .dropdown-menu(aria-labelledby='navbarDropdown')
+              a.dropdown-item(href='#') Theo ngày
+              a.dropdown-item(href='#') Theo tháng
+              a.dropdown-item(href='#') Theo năm
     block content
     block footer

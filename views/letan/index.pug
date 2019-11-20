@@ -3,14 +3,17 @@ extends ./common
 block content
   h1.text-center.my-4 Danh sách phòng
 
-  .d-flex.justify-content-around.flex-wrap.m-4
-    each phong in dsPhong
-      .phong
-        .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAU}`)
-          p.phong-text= phong.MA_PHONG
-        .phong-trangthai(style=`background-color: ${phong.MAMAU}`)
+  #dsphong.d-flex.flex
+    .d-flex.justify-content-around.flex-wrap.my-4
+      each phong in dsPhong
+        .phong(data-toggle="collapse", data-target=`#${phong.MA_PHONG}-info`, role="button")
+          .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAU}`)
+            p.phong-text= phong.MA_PHONG
+          .phong-trangthai(style=`background-color: ${phong.MAMAU}`)
+    #info
+      p hello
   hr
-  .d-flex.m-4.justify-content-around
+  .d-flex.m-4.justify-content-around.flex-wrap
     div
       .text-center
         b(style="font-size: 20px") Loại phòng

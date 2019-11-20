@@ -16,7 +16,8 @@ module.exports.index = async (req, res, next) => {
   }
 
   res.render('letan/index', {
-    title: 'Danh sách phòng',
+    title: 'Vitamin Sea: Phòng',
+    active: 'tab1',
     dsPhong: result.recordsets[0],
     dsTrangThai: result.recordsets[1],
     dsLoaiPhong: result.recordsets[2]
