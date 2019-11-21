@@ -1,0 +1,45 @@
+extends ./common
+
+block content
+  .m-4
+    h1.text-center Thông tin khách thuê phòng
+
+    //- Form tìm kiếm khách
+    .d-flex.justify-content-center.my-4
+      form.col-lg-12.col-md-10.bordered.row(action="/letan/khach/search", method="GET")
+        .row.my-2.col-lg-6.text-right
+          label.col-md-4.my-auto(for="search-khach-ma") Mã khách
+          input#search-khach-ma.form-control.col-md-8.text-right.text-md-left(type="number", name="MA", value=values?values.MA?values.MA:'':'', min="1")
+        .row.my-2.col-lg-6.text-right
+          label.col-md-4.my-auto(for="search-khach-ten") Tên khách
+          input#search-khach-ten.form-control.col-md-8.text-right.text-md-left(type="text", name="TEN", value=values?values.TEN?values.TEN:'':'')
+        .row.my-2.col-lg-6.text-right
+          label.col-md-4.my-auto(for="search-khach-cmndpassport") CMND/PASSPORT
+          input#search-khach-cmndpassport.form-control.col-md-8.text-right.text-md-left(type="text", name="CMPA", value=values?values.CMPA?values.CMPA:'':'')
+        .row.my-2.col-lg-6.text-right
+          label.col-md-4.my-auto(for="search-khach-quoctich") Quốc tịch
+          input#search-khach-quoctich.form-control.col-md-8.text-right.text-md-left(type="text", name="QT", value=values?values.QT?values.QT:'':'')
+        .text-right.col-12
+          button.btn.btn-success(type="submit") Search
+
+    //- Bảng thông tin khách
+    table.table.table-hover.table-sm
+      thead.thead-light
+        tr
+          th Mã số khách
+          th Họ và tên
+          th CMND/PASSPORT
+          th Điện thoại
+          th Quốc tịch
+          th Xử lý
+      tbody
+        each khach in dsKhach
+          tr
+            td= khach.MA_KHACH
+            td= khach.HOTEN_KHACH
+            td= khach['CMND/PASSPORT']
+            td= khach.DIENTHOAI
+            td= khach.QUOCTICH
+            td
+              a.btn.btn-warning.mr-2(href="#", title="Sửa") ?
+              a.btn.btn-danger(href="#", title="Xóa") X

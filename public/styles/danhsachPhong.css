@@ -29,6 +29,7 @@
 .phong-text {
   font-size: 25px;
   font-weight: bolder;
+  user-select: none;
 }
 
 .chuthich-loaiphong {

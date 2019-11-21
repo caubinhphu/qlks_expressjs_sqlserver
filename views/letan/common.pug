@@ -8,21 +8,27 @@ html(lang="vi")
     script(src="/scripts/bootstrap.min.js")
   body
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-      a.navbar-brand(href='#') Vitamin Sea Hotel
+      a.navbar-brand(href='/letan') Vitamin Sea Hotel
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto
+        ul.navbar-nav.mr-auto.text-right
           li.nav-item(class=active==='tab1'?'active':'')
-            a.nav-link(href='#') Phòng
+            a.nav-link(href='/letan') Phòng
           li.nav-item(class=active==='tab2'?'active':'')
-            a.nav-link(href='#') Khách
-          li.nav-item.dropdown(class=active==='tab3'?'active':'')
-            a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            a.nav-link(href='/letan/khach') Khách
+          li.nav-item(class=active==='tab3'?'active':'')
+            a.nav-link(href='/letan/thuephong') Thuê phòng
+          li.nav-item(class=active==='tab4'?'active':'')
+            a.nav-link(href='/letan/themdichvu') Thêm dịch vụ
+          li.nav-item(class=active==='tab5'?'active':'')
+            a.nav-link(href='/letan/traphong') Trả phòng
+          li.nav-item.dropdown(class=active==='tab6'?'active':'')
+            a#navbarDropdown.nav-link.dropdown-toggle(href='/letan/doanhthu', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | Doanh thu
-            .dropdown-menu(aria-labelledby='navbarDropdown')
-              a.dropdown-item(href='#') Theo ngày
-              a.dropdown-item(href='#') Theo tháng
-              a.dropdown-item(href='#') Theo năm
+            .dropdown-menu(aria-labelledby='navbarDropdown').text-right
+              a.dropdown-item(href='/letan/doanhthu/ngay') Theo ngày
+              a.dropdown-item(href='/letan/doanhthu/thang') Theo tháng
+              a.dropdown-item(href='/letan/doanhthu/nam') Theo năm
     block content
     block footer

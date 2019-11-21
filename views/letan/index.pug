@@ -3,15 +3,25 @@ extends ./common
 block content
   h1.text-center.my-4 Danh sách phòng
 
-  #dsphong.d-flex.flex
+  #dsphong.d-flex.mx-md-4
     .d-flex.justify-content-around.flex-wrap.my-4
       each phong in dsPhong
-        .phong(data-toggle="collapse", data-target=`#${phong.MA_PHONG}-info`, role="button")
+        .phong(data-toggle="collapse", data-target=`#info-${phong.MA_PHONG}`)
           .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAU}`)
             p.phong-text= phong.MA_PHONG
           .phong-trangthai(style=`background-color: ${phong.MAMAU}`)
-    #info
-      p hello
+    .my-4
+      each phong in dsPhong
+        .collapse.p-2(id=`info-${phong.MA_PHONG}`, data-parent="#dsphong", style="background-color: #b3d7ff; border: 2px solid black; border-radius: 10px")
+          div(style="width: max-content")
+            .text-center.mb-3
+              b Thông tin phòng
+            p= `Số phòng: ${phong.MA_PHONG}`
+            p= `Loại phòng: ${phong.TEN_LOAIPHONG}`
+            p= `Trạng thái phòng: ${phong.TEN_TRANGTHAI}`
+            p= `Giá phòng: ${phong.GIAPHONG}đ`
+            .text-center
+              a.btn.btn-primary(href=`/letan/phong/${phong.MA_PHONG}`) Chi tiết phòng
   hr
   .d-flex.m-4.justify-content-around.flex-wrap
     div

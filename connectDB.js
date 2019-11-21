@@ -4,7 +4,7 @@ const config = {
   user: 'sa',
   password: '01695402297',
   server: 'localhost',
-  database: 'QLKS_2'
+  database: 'QLKS_3'
 }
 
 const pool = new sql.ConnectionPool(config);
