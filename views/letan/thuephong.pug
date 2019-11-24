@@ -1,0 +1,74 @@
+extends ./common
+
+block content
+  .container.py-2
+    h1.text-center Thuê phòng
+
+    form(action="/letan/thuephong", method="POST")
+      .form-group.d-flex.align-items-center
+        label.mr-2(for="maphong") Phòng
+        input#maphong.form-control(type="text", value=phong, name="MAPHONG", disabled)
+        //- select#maphong.form-control(name="MAPHONG")
+        //-   each phongSS in dsPhongSS
+        //-     option(value=phongSS.MA_PHONG, selected=phong?phongSS.MA_PHONG===phong?true:false:false)= `${phongSS.MA_PHONG} (${phongSS.TEN_LOAIPHONG})`
+      .border-top.py-2
+        h5.text-center Thông tin khách thuê phòng
+        .row
+          .col-md-6
+            .form-group
+              label(for="tenkhach", style="width: max-content") Họ tên khách hàng
+              input#tenkhach.form-control(type="text", name="TENKHACH")
+            .form-group
+              label(for="cmndpassport") CMND hoặc PASSPORT
+              input#cmndpassport.form-control(type="text", name="CM_PA")
+            .form-group
+              label(for="quoctich") Quốc tịch
+              input#quoctich.form-control(type="text", name="QUOCTICH")
+          .col-md-6
+            .form-group
+              label(for="dienthoai") Điện thoại
+              input#dienthoai.form-control(type="text", name="DIENTHOAI")
+            .form-group
+              label(for="songuoi") Số người
+              input#songuoi.form-control(type="number", min="1", name="SONGUOI")
+            .form-group
+              label(for="ngaydi") Ngày đi
+              input#ngaydi.form-control(type="date", name="NGAYDI")
+            .form-group
+              label(for="nhanvien") Mã nhân viên
+              input#nhanvien.form-control(type="text", name="MANV")
+      .text-right
+        button.btn.btn-primary(type="submit") Cho thuê phòng
+    hr
+  .p-1
+    .text-center.py-2
+      button.btn.btn-info(type="button", data-toggle="collapse", data-target="#dsThuePhong") Danh sách thuê phòng
+    table#dsThuePhong.table.table-sm.table-hover.collapse.text-center
+      thead.thead-light
+        tr
+          th Số phiếu
+          th Mã phòng
+          th Mã khách
+          th Họ tên khách
+          th CMND hoặc PASSPORT
+          th Quốc tịch
+          th Điện thoại
+          th Ngày đến
+          th Ngày đi
+          th Số người
+          th Giá phòng
+      tbody
+        each thue in dsThue
+          tr
+            td= thue.SO_PHIEU
+            td= thue.MAPHONG
+            td= thue.MAKHACH
+            td= thue.HOTEN_KHACH
+            td= thue["CMND/PASSPORT"]
+            td= thue.QUOCTICH
+            td= thue.DIENTHOAI
+            td= thue.NGAYDEN
+            td= thue.NGAYDI
+            td= thue.SONGUOI
+            td= thue.GIAPHONG
+        

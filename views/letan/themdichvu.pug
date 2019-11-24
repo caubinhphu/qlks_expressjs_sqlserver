@@ -1,0 +1,44 @@
+extends ./common
+
+block content
+  .container.my-4
+    h1.text-center Thêm dịch vụ
+
+    form(action="/letan/themdichvu", method="POST")
+      .form-group.d-flex.align-items-center
+          label.mr-2(for="maphong") Phòng
+          input#maphong.form-control(type="text", value=phong, name="MAPHONG", disabled)
+      //- .form-group.d-flex.align-items-center
+      //-   label.mr-2(for="maphong") Phòng
+      //-   select#maphong.form-control(name="MAPHONG")
+      //-     each phongThue in dsPhongThue
+      //-       option(value=phongThue.MAPHONG, selected=phong?phong===phongThue.MAPHONG?true:false:false)= phongThue.MAPHONG
+      .row
+        .col-md-6
+          .form-group
+            label(for="dichvu") Dịch vụ
+            select#dichvu.form-control(name="MADV")
+              each dv in dsDichVu
+                option(value=dv.MA_DICHVU)= dv.TEN_DICHVU
+        .col-md-6
+          .form-group
+            label(for="soluong") Số lượng
+            input#soluong.form-control(type="number", min="1", name="SL", value=1)
+      .text-right
+        button.btn.btn-primary(type="submit") Thêm
+    hr
+    .p-1
+      .text-center.py-2
+        button.btn.btn-info(type="button", data-toggle="collapse", data-target="#dsDichVu") Danh sách dịch vụ
+      table#dsDichVu.table.table-sm.table-hover.collapse.text-center
+        thead.thead-light
+          tr
+            th Mã dịch vụ
+            th.text-left Tên dịch vụ
+            th Giá
+        tbody
+          each dichvu in dsDichVu
+            tr
+              td= dichvu.MA_DICHVU
+              td.text-left= dichvu.TEN_DICHVU
+              td= dichvu.GIA_DICHVU

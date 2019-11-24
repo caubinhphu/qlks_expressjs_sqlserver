@@ -18,7 +18,11 @@ block content
           input#search-khach-cmndpassport.form-control.col-md-8.text-right.text-md-left(type="text", name="CMPA", value=values?values.CMPA?values.CMPA:'':'')
         .row.my-2.col-lg-6.text-right
           label.col-md-4.my-auto(for="search-khach-quoctich") Quốc tịch
-          input#search-khach-quoctich.form-control.col-md-8.text-right.text-md-left(type="text", name="QT", value=values?values.QT?values.QT:'':'')
+          select#search-khach-quoctich.form-control.col-md-8.text-right.text-md-left(name="QT")
+            option(value="", selected=values?!values.QT?true:false:true) Tất cả
+            each qt in dsQT
+              option(value=qt.QUOCTICH, selected=values?values.QT===qt.QUOCTICH?true:false:false)= qt.QUOCTICH
+          //- input#search-khach-quoctich.form-control.col-md-8.text-right.text-md-left(type="text", name="QT", value=values?values.QT?values.QT:'':'')
         .text-right.col-12
           button.btn.btn-success(type="submit") Search
 
@@ -31,7 +35,7 @@ block content
           th CMND/PASSPORT
           th Điện thoại
           th Quốc tịch
-          th Xử lý
+          //- th Xử lý
       tbody
         each khach in dsKhach
           tr
@@ -40,6 +44,6 @@ block content
             td= khach['CMND/PASSPORT']
             td= khach.DIENTHOAI
             td= khach.QUOCTICH
-            td
-              a.btn.btn-warning.mr-2(href="#", title="Sửa") ?
-              a.btn.btn-danger(href="#", title="Xóa") X
+            //- td
+            //-   a.btn.btn-warning.mr-2(href="#", title="Sửa") ?
+            //-   a.btn.btn-danger(href="", title="Xóa") X

@@ -20,4 +20,12 @@ app.get('/', (req, res, next) => res.send('Hello'));
 
 app.use('/letan', leTanRoute);
 
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).render('errors', {
+    title: 'Errors',
+    err: err
+  });
+});
+
 app.listen(3000, () => console.log('Server is running'));

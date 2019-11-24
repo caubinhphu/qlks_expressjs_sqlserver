@@ -1,0 +1,17 @@
+extends ./common
+
+block content
+  .container.py-2
+    h1.text-center Tổn thất
+    h4.text-center= `Phòng ${phong}`
+    .row
+      .col-md-6.form-group
+          label.mr-2(for="vattu") Vật tư
+          select#vattu.form-control(name="MAVT")
+            each vatTu in dsVatTu
+              option(value=vatTu.MA_VATTU)= vatTu.TEN_VATTU
+      .col-md-6.form-group
+        label(for="soluong") Số lượng
+        input#soluong.form-control(type="number", min="1", name="SL", value=1)
+    .text-right
+        button.btn.btn-primary(type="submit") Thêm

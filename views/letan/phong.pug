@@ -1,0 +1,66 @@
+extends ./common
+
+block content
+  a.btn.btn-secondary.m-4(href="/letan") Back
+  .container.mb-4
+    h1.text-center Thông tin phòng
+    .row
+      //- Thông tin phòng
+      .col-md-6
+        h5.text-center.border-bottom.py-2 Thông tin phòng
+        p= `Số phòng: ${phong.MA_PHONG}`
+        p= `Loại phòng: ${phong.TEN_LOAIPHONG}`
+        p= `Trạng thái phòng: ${phong.TEN_TRANGTHAI}`
+        p= `Giá phòng: ${phong.GIAPHONG}đ`
+        p= `Kích thước phòng: ${phong.KICHTHUOC}m`
+          sup 2
+      //- Danh sách vật tư của phòng
+      .col-md-6
+        h5.text-center.py-2 Danh sách vật tư của phòng
+        table.table.table-sm.table-hover
+          thead.thead-light
+            tr
+              th Tên vật tư
+              th Số lượng
+          tbody
+            each vattu in dsVatTu
+              tr
+                td= vattu.TEN_VATTU
+                td= vattu.SOLUONG
+    hr
+    if (thuePhongInfo)
+      .row
+        //- Thông tin thuê phòng
+        .col-md-6
+            div
+              h5.text-center.border-bottom.py-2 Thông tin khách thuê phòng
+              p= `Mã khách: ${thuePhongInfo.MAKHACH}`
+              p= `Họ tên khách: ${thuePhongInfo.HOTEN_KHACH}`
+              p= `CMND/PASSPORT: ${thuePhongInfo["CMND/PASSPORT"]}`
+              p= `Quốc tịch: ${thuePhongInfo.QUOCTICH}`
+              p= `Điện thoại: ${thuePhongInfo.DIENTHOAI}`
+              p= `Số người: ${thuePhongInfo.SONGUOI}`
+              p= `Ngày đến: ${thuePhongInfo.NGAYDEN}`
+              p= `Ngày đi: ${thuePhongInfo.NGAYDI}`
+              .d-flex.justify-content-around
+                a.btn.btn-primary(href="/letan/phong/themdichvu") Thêm dịch vụ
+                a.btn.btn-primary(href="/letan/phong/traphong") Trả phòng
+        if (dichVuThue)
+          .col-md-6
+            h5.text-center.py-2 Danh sách dịch vụ thêm
+            table.table.table-sm.table-hover
+              thead.thead-light
+                tr
+                  th Tên dịch vụ
+                  th Số lượng
+              tbody
+                each dv in dichVuThue
+                  tr
+                    td= dv.TEN_DICHVU
+                    td= dv.SOLUONG
+    else
+      .d-flex.justify-content-center.align-items-center
+        a.btn.btn-primary(href="/letan/phong/thuephong") Cho thuê phòng
+        
+    
+
