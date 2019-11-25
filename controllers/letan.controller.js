@@ -1,4 +1,7 @@
 const sql = require('mssql');
+const fs = require('fs');
+const shortid = require('shortid');
+const pdf = require('html-pdf');
 
 const pool = require('../connectDB');
 
@@ -87,6 +90,8 @@ module.exports.getPhong = async (req, res, next) => {
     request.input('MAPHONG', req.params.maphong);
     var phongInfo = await request.execute('SP_XUAT_THONGTIN_PHONG');
     var thuePhongInfo = await request.execute('SP_KHACH_THUEPHONG');
+    var request2 = new sql.Request(pool);
+    var dsTrangThai = await request2.execute('SP_DANHSACH_TRANGTHAI');
   } catch(err) {
     next(err);
   } finally {
@@ -98,7 +103,8 @@ module.exports.getPhong = async (req, res, next) => {
     phong: phongInfo.recordsets[0][0],
     dsVatTu: phongInfo.recordsets[1],
     thuePhongInfo: thuePhongInfo.recordset[0],
-    dichVuThue: thuePhongInfo.recordsets[1]
+    dichVuThue: thuePhongInfo.recordsets[1],
+    dsTrangThai: dsTrangThai.recordset
   });
 };
 
@@ -110,7 +116,6 @@ module.exports.getThuePhong = async (req, res, next) => {
   try {
     await pool.connect();
     var request = new sql.Request(pool);
-    // var dsPhongSanSang = await request.execute('SP_PHONG_SANSANG');
     var dsThuePhong = await request.execute('SP_DANHSACH_THUEPHONG');
   } catch(err) {
     next(err);
@@ -121,7 +126,6 @@ module.exports.getThuePhong = async (req, res, next) => {
   res.render('letan/thuephong', {
     title: 'Vitamin Sea: Thuê phòng',
     active: 'tab1',
-    // dsPhongSS: dsPhongSanSang.recordset,
     dsThue: dsThuePhong.recordset,
     phong: phong
   });
@@ -141,14 +145,15 @@ module.exports.postThuePhong = async (req, res, next) => {
     for (let i in data) {
       request.input(i, data[i]);
     }
+    request.input('MANV', 'FO001');
     await request.execute('SP_THEMPHIEU');
+    
+    res.redirect(`/letan/phong/${data.MAPHONG}`);
   } catch(err) {
     next(err);
   } finally {
     await pool.close();
   }
-
-  res.redirect(`/letan/phong/${data.MAPHONG}`);
 };
 
 module.exports.getThemDichVu = async (req, res, next) => {
@@ -171,7 +176,6 @@ module.exports.getThemDichVu = async (req, res, next) => {
     title: 'Vitamin Sea: Thêm dịch vụ',
     active: 'tab1',
     dsDichVu: dsDichVu.recordset,
-    // dsPhongThue: dsPhongDangThue.recordset,
     phong: phong
   });
 };
@@ -191,12 +195,13 @@ module.exports.postThemDichVu = async (req, res, next) => {
       request.input(i, data[i]);
     }
     await request.execute('SP_THEM_THUE_DICHVU');
+
+    res.redirect(`/letan/phong/${data.MAPHONG}`);
   } catch(err) {
     next(err);
   } finally {
     await pool.close();
   }
-  res.redirect(`/letan/phong/${data.MAPHONG}`);
 };
 
 module.exports.getTraPhong = async (req, res, next) => {
@@ -223,6 +228,18 @@ module.exports.getTraPhong = async (req, res, next) => {
     phong: phong
   });
 };
+
+function readFile(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, {encoding: 'utf-8'}, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
 
 module.exports.postTraPhong = async (req, res, next) => {
   var data = req.body;
@@ -254,14 +271,129 @@ module.exports.postTraPhong = async (req, res, next) => {
     var request3 = new sql.Request(pool);
     request3.input('MAPHONG', data.MAPHONG);
     var hoaDon = await request3.execute('SP_TRAPHONG_B3_HOADON'); // trả phòng bước 3
-    
+    // luu hóa đơn
+    var templateHoaDon = await readFile('./public/hoadon/template.html');
+    var bodyHoaDon = hoaDon.recordsets[1].reduce((str, dt) => {
+      return str += `<tr><td>${dt.DOITUONG}</td><td>${dt.LOAI}</td><td>${dt.SOLUONG}</td><td>${dt.DONGIA}</td><td>${dt.THANHTIEN}</td></tr>`;
+    }, '');
+    var fileHoaDon = templateHoaDon.replace('#sophieu', hoaDon.recordset[0].SO_PHIEU)
+                                   .replace('#tenkhach', hoaDon.recordset[0].HOTEN_KHACH)
+                                   .replace('#cmnd_passport', hoaDon.recordset[0]['CMND/PASSPORT'])
+                                   .replace('#quoctich', hoaDon.recordset[0].QUOCTICH)
+                                   .replace('#dienthoai', hoaDon.recordset[0].DIENTHOAI)
+                                   .replace('#body', bodyHoaDon)
+                                   .replace('#tongcong', hoaDon.recordsets[2][0].TONGTIEN)
+                                   .replace('#tongtien', hoaDon.recordsets[2][0].TONGTIENTHANHTOAN)
+                                   .replace('#ngay', hoaDon.recordsets[3][0].NGAY)
+                                   .replace('#thang', hoaDon.recordsets[3][0].THANG)
+                                   .replace('#nam', hoaDon.recordsets[3][0].NAM);
+    fs.writeFile(`./public/hoadon/${hoaDon.recordset[0].SO_PHIEU}.html`, fileHoaDon, { encoding: 'utf-8' }, (err) => {
+      if (err) throw err;
+      console.log('Hoa don da duoc luu');
+    });
+
     var request4 = new sql.Request(pool);
     request4.input('MAPHONG', data.MAPHONG);
     await request4.execute('SP_TRAPHONG_B4'); // trả phòng bước 4
+
+    res.redirect(`/hoadon/${hoaDon.recordset[0].SO_PHIEU}.html`);
   } catch(err) {
     next(err);
   } finally {
     await pool.close();
   }
-  res.redirect(`/letan/phong/${data.MAPHONG}`);
+  
+};
+
+module.exports.postPhong = async (req, res, next) => {
+  var phong = req.params.maphong;
+  try {
+    await pool.connect();
+    var request = new sql.Request(pool);
+    request.input('MAPHONG', phong);
+    request.input('MA_TT', req.body.MA_TT);
+    await request.execute('SP_CAPNHAT_TRANGTHAIPHONG');
+    res.redirect(`/letan/phong/${phong}`);
+  } catch(err) {
+    next(err);
+  } finally {
+    await pool.close();
+  }
+};
+
+module.exports.postDoanhThuNgay = async (req, res, next) => {
+  var arr = req.body.ngay.split('-').map(x => parseInt(x));
+  try {
+    await pool.connect();
+    var request = new sql.Request(pool);
+    request.input('NGAY', arr[2]);
+    request.input('THANG', arr[1]);
+    request.input('NAM', arr[0]);
+
+    var doanhThu = await request.execute('SP_DOANHTHU_NGAY');
+
+    var templateDoanhThu = await readFile('./public/doanhthu/template.html');
+    var bodyDoanhThu = doanhThu.recordsets[0].reduce((str, dt) => {
+      return str += `<tr style="text-align: center"><td style="border: 1px solid black">${dt.MAPHONG}</td><td style="border: 1px solid black">${dt.TIENPHONG}</td><td style="border: 1px solid black">${dt.TIENDICHVU}</td><td style="border: 1px solid black">${dt.DOANHTHUPHONG}</td></tr>`;
+    }, '');
+    var fileDoanhThuHTML = templateDoanhThu.replace('#loaidt', 'NGÀY')
+                                           .replace('#thoidiem', `${arr[2]}/${arr[1]}/${arr[0]}`)
+                                           .replace('#body', bodyDoanhThu)
+                                           .replace('#tongcong', doanhThu.recordsets[1][0].TONGDOANHTHU);
+    var idBaoCaoDoanhThu = shortid.generate();
+
+    pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
+      if (err) return console.log(err);
+      console.log(res);
+    });
+
+    res.render('letan/doanhthu', {
+      loaiDoanhThu: 'NGÀY',
+      thoiDiem: `${arr[2]}/${arr[1]}/${arr[0]}`,
+      dsDTPhong: doanhThu.recordset,
+      tongDT: doanhThu.recordsets[1][0],
+      idBaoCaoDoanhThu: idBaoCaoDoanhThu
+    });
+  } catch(err) {
+    next(err);
+  } finally {
+    await pool.close();
+  }
+};
+
+module.exports.postDoanhThuThang = async (req, res, next) => {
+  try {
+    await pool.connect();
+    var request = new sql.Request(pool);
+    request.input('THANG', parseInt(req.body.THANG));
+    request.input('NAM', parseInt(req.body.NAM));
+
+    var doanhThu = await request.execute('SP_DOANHTHU_THANG');
+
+    var templateDoanhThu = await readFile('./public/doanhthu/template.html');
+    var bodyDoanhThu = doanhThu.recordsets[0].reduce((str, dt) => {
+      return str += `<tr style="text-align: center"><td style="border: 1px solid black">${dt.MAPHONG}</td><td style="border: 1px solid black">${dt.TIENPHONG}</td><td style="border: 1px solid black">${dt.TIENDICHVU}</td><td style="border: 1px solid black">${dt.DOANHTHUPHONG}</td></tr>`;
+    }, '');
+    var fileDoanhThuHTML = templateDoanhThu.replace('#loaidt', 'THÁNG')
+                                           .replace('#thoidiem', req.body.THANG + '/' + req.body.NAM)
+                                           .replace('#body', bodyDoanhThu)
+                                           .replace('#tongcong', doanhThu.recordsets[1][0].TONGDOANHTHU);
+    var idBaoCaoDoanhThu = shortid.generate();
+    pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
+      if (err) return console.log(err);
+      console.log(res);
+    });
+
+    res.render('letan/doanhthu', {
+      loaiDoanhThu: 'THÁNG',
+      thoiDiem: req.body.THANG + '/' + req.body.NAM,
+      dsDTPhong: doanhThu.recordset,
+      tongDT: doanhThu.recordsets[1][0],
+      idBaoCaoDoanhThu: idBaoCaoDoanhThu
+    });
+  } catch(err) {
+    next(err);
+  } finally {
+    await pool.close();
+  }
 };

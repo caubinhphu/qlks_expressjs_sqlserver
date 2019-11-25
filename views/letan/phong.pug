@@ -2,7 +2,7 @@ extends ./common
 
 block content
   a.btn.btn-secondary.m-4(href="/letan") Back
-  .container.mb-4
+  .mx-5.my-3
     h1.text-center Thông tin phòng
     .row
       //- Thông tin phòng
@@ -14,6 +14,13 @@ block content
         p= `Giá phòng: ${phong.GIAPHONG}đ`
         p= `Kích thước phòng: ${phong.KICHTHUOC}m`
           sup 2
+        button.btn.btn-warning(type="button", data-toggle="collapse", data-target="#form-capnhat-trangthai") Cập nhật trạng thái phòng
+        form#form-capnhat-trangthai.mt-2.collapse.row(action=`/letan/phong/${phong.MA_PHONG}`, method="post")
+          select.form-control.col-8(name="MA_TT")
+            each trangThai in dsTrangThai
+              option(value=trangThai.MA_TRANGTHAI)= trangThai.TEN_TRANGTHAI
+          .col-4
+            button.btn.btn-success(type="submit") Cập nhật
       //- Danh sách vật tư của phòng
       .col-md-6
         h5.text-center.py-2 Danh sách vật tư của phòng

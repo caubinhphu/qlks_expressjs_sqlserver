@@ -24,4 +24,10 @@ router.post('/phong/traphong', controller.postTraPhong);
 
 router.get('/phong/:maphong', controller.getPhong);
 
+router.post('/phong/:maphong', controller.postPhong);
+
+router.post('/doanhthu/ngay', controller.postDoanhThuNgay);
+
+router.post('/doanhthu/thang', controller.postDoanhThuThang);
+
 module.exports = router;

@@ -4,13 +4,10 @@ block content
   .container.py-2
     h1.text-center Thuê phòng
 
-    form(action="/letan/thuephong", method="POST")
+    form(action="/letan/phong/thuephong", method="POST")
       .form-group.d-flex.align-items-center
         label.mr-2(for="maphong") Phòng
-        input#maphong.form-control(type="text", value=phong, name="MAPHONG", disabled)
-        //- select#maphong.form-control(name="MAPHONG")
-        //-   each phongSS in dsPhongSS
-        //-     option(value=phongSS.MA_PHONG, selected=phong?phongSS.MA_PHONG===phong?true:false:false)= `${phongSS.MA_PHONG} (${phongSS.TEN_LOAIPHONG})`
+        input#maphong.form-control(type="text", value=phong, name="MAPHONG")
       .border-top.py-2
         h5.text-center Thông tin khách thuê phòng
         .row
@@ -34,9 +31,9 @@ block content
             .form-group
               label(for="ngaydi") Ngày đi
               input#ngaydi.form-control(type="date", name="NGAYDI")
-            .form-group
-              label(for="nhanvien") Mã nhân viên
-              input#nhanvien.form-control(type="text", name="MANV")
+            //- .form-group
+            //-   label(for="nhanvien") Mã nhân viên
+            //-   input#nhanvien.form-control(type="text", name="MANV")
       .text-right
         button.btn.btn-primary(type="submit") Cho thuê phòng
     hr

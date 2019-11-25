@@ -1,0 +1,24 @@
+extends ./common
+
+block content
+  .container.my-4
+    h2.mt-4.text-center= `DOANH THU ${loaiDoanhThu} ${thoiDiem}`
+    table.table.table-sm
+      thead.thead-light
+        tr
+          th Phòng
+          th Tiền phòng
+          th Tiền dịch vụ
+          th Doanh thu
+      tbody
+        each dtPhong in dsDTPhong
+          tr
+            td= dtPhong.MAPHONG
+            td= dtPhong.TIENPHONG
+            td= dtPhong.TIENDICHVU
+            td= dtPhong.DOANHTHUPHONG
+        tr
+          td(colspan="3") Tổng doanh thu
+          td= tongDT.TONGDOANHTHU
+    .text-right
+      a.btn.btn-primary(href=`/doanhthu/${loaiDoanhThu==="NGÀY"?'ngay':'thang'}/${idBaoCaoDoanhThu}.pdf`) In doanh thu

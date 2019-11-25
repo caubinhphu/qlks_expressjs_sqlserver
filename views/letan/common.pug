@@ -1,18 +1,38 @@
 html(lang="vi")
   head
     title= title
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/styles/bootstrap.min.css")
     link(rel="stylesheet", href="/styles/danhsachPhong.css")
+    link(rel="stylesheet", href="/styles/fontawesome-free/css/all.min.css")
     script(src="/scripts/jquery.js")
     script(src="/scripts/popper.min.js")
     script(src="/scripts/bootstrap.min.js")
   body
+    //- nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+    //-   .container
+    //-     a.navbar-brand(href='/letan')
+    //-       span.web-name.px-3 Vitamin 
+    //-       span.badge-pill.badge-warning Sea
+    //-     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarResponsive')
+    //-       span.navbar-toggler-icon
+    //-     #navbarResponsive.collapse.navbar-collapse.text-right
+    //-       ul.navbar-nav.ml-auto
+    //-         li.nav-item
+    //-           a.nav-link(href='/dangnhap') Đăng nhập
+    //-         li.nav-item
+    //-           a.nav-link(href='/dangxuat') Đăng xuất
+    //- div
+    
+    img.img-fluid(src="/images/banner2.jpg", alt="Banner")
+
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark
       a.navbar-brand(href='/letan') Vitamin Sea Hotel
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav.mr-auto.text-right
+      #navbarSupportedContent.collapse.navbar-collapse.text-right
+        ul.navbar-nav.mr-auto
           li.nav-item(class=active==='tab1'?'active':'')
             a.nav-link(href='/letan') Phòng
           li.nav-item(class=active==='tab2'?'active':'')
@@ -21,8 +41,74 @@ html(lang="vi")
             a#navbarDropdown.nav-link.dropdown-toggle(href='/letan/doanhthu', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | Doanh thu
             .dropdown-menu(aria-labelledby='navbarDropdown').text-right
-              a.dropdown-item(href='/letan/doanhthu/ngay') Theo ngày
-              a.dropdown-item(href='/letan/doanhthu/thang') Theo tháng
-              a.dropdown-item(href='/letan/doanhthu/nam') Theo năm
+              a.dropdown-item(href='#doanhthu-ngay', data-toggle="modal") Theo ngày
+              a.dropdown-item(href='#doanhthu-thang', data-toggle="modal") Theo tháng
+
+    #doanhthu-ngay.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Ngày cần tính doanh thu
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            form(action="/letan/doanhthu/ngay", method="post")
+              input.form-control(type="date", name="ngay", min="2010-01-01", max=`${(new Date).getFullYear()}-12-31`)
+              .modal-footer
+                button.btn.btn-primary(type="submit") Tính doanh thu
+
+    #doanhthu-thang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#exampleModalLabel.modal-title Tháng cần tính doanh thu
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            form(action="/letan/doanhthu/thang", method="post")
+              .form-group
+                label Tháng
+                select.form-control(name="THANG")
+                  each t in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                    option(value=t)= t
+              .form-group
+                label Năm
+                select.form-control(name="NAM")
+                  - var n = (new Date).getFullYear();
+                  - var nam = 2010
+                  while nam <= n
+                    option(value=nam)= nam
+                    - nam++
+              .modal-footer
+                button.btn.btn-primary(type='submit') Tính doanh thu
+
     block content
-    block footer
+    
+    footer.footer.text-center.bg-info.py-4
+      .container
+        .row
+          // Footer Location
+          .col-lg-4.mb-3.mb-lg-0
+            ul.list-unstyled.mb-0
+              li
+                i.fas.fa-envelope.mt-4.fa-2x
+                p vitaminsea@gmail
+          // Footer Social Icons
+          .col-lg-4.mb-3.mb-lg-0
+            h4.text-uppercase.mb-4 Contact with us
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-facebook-f
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-twitter
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-linkedin-in
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-dribbble
+            h4.text-uppercase.mb-4
+          // Footer About Text
+          .col-lg-4
+            h5.mt-md-4 About us
+            p Vitamin Sea Team
+    section.copyright.py-4.text-center.text-black.text-lg.bg-secondary
+      .container
+        small Copyright &copy; Vitamin Sea website

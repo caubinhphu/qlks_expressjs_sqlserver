@@ -4,15 +4,10 @@ block content
   .container.my-4
     h1.text-center Thêm dịch vụ
 
-    form(action="/letan/themdichvu", method="POST")
+    form(action="/letan/phong/themdichvu", method="POST")
       .form-group.d-flex.align-items-center
           label.mr-2(for="maphong") Phòng
-          input#maphong.form-control(type="text", value=phong, name="MAPHONG", disabled)
-      //- .form-group.d-flex.align-items-center
-      //-   label.mr-2(for="maphong") Phòng
-      //-   select#maphong.form-control(name="MAPHONG")
-      //-     each phongThue in dsPhongThue
-      //-       option(value=phongThue.MAPHONG, selected=phong?phong===phongThue.MAPHONG?true:false:false)= phongThue.MAPHONG
+          input#maphong.form-control(type="text", value=phong, name="MAPHONG")
       .row
         .col-md-6
           .form-group
