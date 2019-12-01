@@ -241,6 +241,18 @@ function readFile(path) {
   });
 }
 
+function createPdf(dataHTML, path) {
+  return new Promise((resolve, reject) => {
+    pdf.create(dataHTML, { format: 'Letter' }).toFile(path, (err, res) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
+
 module.exports.postTraPhong = async (req, res, next) => {
   var data = req.body;
   for (let i in data) {
@@ -274,29 +286,32 @@ module.exports.postTraPhong = async (req, res, next) => {
     // luu hóa đơn
     var templateHoaDon = await readFile('./public/hoadon/template.html');
     var bodyHoaDon = hoaDon.recordsets[1].reduce((str, dt) => {
-      return str += `<tr><td>${dt.DOITUONG}</td><td>${dt.LOAI}</td><td>${dt.SOLUONG}</td><td>${dt.DONGIA}</td><td>${dt.THANHTIEN}</td></tr>`;
+      return str += `<tr><td style="border: 1px solid black; text-align: center">${dt.DOITUONG}</td><td style="border: 1px solid black; text-align: center">${dt.LOAI}</td><td style="border: 1px solid black; text-align: center">${dt.SOLUONG}</td><td style="border: 1px solid black; text-align: right">${dt.DONGIA}</td><td style="border: 1px solid black; text-align: right">${dt.THANHTIEN}</td></tr>`;
     }, '');
-    var fileHoaDon = templateHoaDon.replace('#sophieu', hoaDon.recordset[0].SO_PHIEU)
-                                   .replace('#tenkhach', hoaDon.recordset[0].HOTEN_KHACH)
-                                   .replace('#cmnd_passport', hoaDon.recordset[0]['CMND/PASSPORT'])
-                                   .replace('#quoctich', hoaDon.recordset[0].QUOCTICH)
-                                   .replace('#dienthoai', hoaDon.recordset[0].DIENTHOAI)
-                                   .replace('#body', bodyHoaDon)
-                                   .replace('#tongcong', hoaDon.recordsets[2][0].TONGTIEN)
-                                   .replace('#tongtien', hoaDon.recordsets[2][0].TONGTIENTHANHTOAN)
-                                   .replace('#ngay', hoaDon.recordsets[3][0].NGAY)
-                                   .replace('#thang', hoaDon.recordsets[3][0].THANG)
-                                   .replace('#nam', hoaDon.recordsets[3][0].NAM);
-    fs.writeFile(`./public/hoadon/${hoaDon.recordset[0].SO_PHIEU}.html`, fileHoaDon, { encoding: 'utf-8' }, (err) => {
-      if (err) throw err;
-      console.log('Hoa don da duoc luu');
-    });
+    var fileHoaDonHTML = templateHoaDon.replace('#sophieu', hoaDon.recordset[0].SO_PHIEU)
+                                       .replace('#tenkhach', hoaDon.recordset[0].HOTEN_KHACH)
+                                       .replace('#cmnd_passport', hoaDon.recordset[0]['CMND/PASSPORT'])
+                                       .replace('#quoctich', hoaDon.recordset[0].QUOCTICH)
+                                       .replace('#dienthoai', hoaDon.recordset[0].DIENTHOAI)
+                                       .replace('#body', bodyHoaDon)
+                                       .replace('#tongcong', hoaDon.recordsets[2][0].TONGTIEN)
+                                       .replace('#tongtien', hoaDon.recordsets[2][0].TONGTIENTHANHTOAN)
+                                       .replace('#ngay', hoaDon.recordsets[3][0].NGAY)
+                                       .replace('#thang', hoaDon.recordsets[3][0].THANG)
+                                       .replace('#nam', hoaDon.recordsets[3][0].NAM);
+
+    // pdf.create(fileHoaDonHTML, { format: 'Letter' }).toFile(`./public/hoadon/${hoaDon.recordset[0].SO_PHIEU}.pdf`, function(err, res) {
+    //   if (err) return console.log(err);
+    //   console.log(res);
+    // });
+    var pathHD = await createPdf(fileHoaDonHTML, `./public/hoadon/${hoaDon.recordset[0].SO_PHIEU}.pdf`);
+    console.log(pathHD);
 
     var request4 = new sql.Request(pool);
     request4.input('MAPHONG', data.MAPHONG);
     await request4.execute('SP_TRAPHONG_B4'); // trả phòng bước 4
 
-    res.redirect(`/hoadon/${hoaDon.recordset[0].SO_PHIEU}.html`);
+    res.redirect(`/hoadon/${hoaDon.recordset[0].SO_PHIEU}.pdf`);
   } catch(err) {
     next(err);
   } finally {
@@ -342,10 +357,12 @@ module.exports.postDoanhThuNgay = async (req, res, next) => {
                                            .replace('#tongcong', doanhThu.recordsets[1][0].TONGDOANHTHU);
     var idBaoCaoDoanhThu = shortid.generate();
 
-    pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
-      if (err) return console.log(err);
-      console.log(res);
-    });
+    // pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
+    //   if (err) return console.log(err);
+    //   console.log(res);
+    // });
+    var pathDT = await createPdf(fileDoanhThuHTML, `./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`);
+    console.log(pathDT);
 
     res.render('letan/doanhthu', {
       loaiDoanhThu: 'NGÀY',
@@ -379,10 +396,12 @@ module.exports.postDoanhThuThang = async (req, res, next) => {
                                            .replace('#body', bodyDoanhThu)
                                            .replace('#tongcong', doanhThu.recordsets[1][0].TONGDOANHTHU);
     var idBaoCaoDoanhThu = shortid.generate();
-    pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
-      if (err) return console.log(err);
-      console.log(res);
-    });
+    // pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
+    //   if (err) return console.log(err);
+    //   console.log(res);
+    // });
+    var pathDT = await createPdf(fileDoanhThuHTML, `./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`);
+    console.log(pathDT);
 
     res.render('letan/doanhthu', {
       loaiDoanhThu: 'THÁNG',

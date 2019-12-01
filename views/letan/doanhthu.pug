@@ -21,4 +21,5 @@ block content
           td(colspan="3") Tổng doanh thu
           td= tongDT.TONGDOANHTHU
     .text-right
-      a.btn.btn-primary(href=`/doanhthu/${loaiDoanhThu==="NGÀY"?'ngay':'thang'}/${idBaoCaoDoanhThu}.pdf`) In doanh thu
+      a.btn.btn-primary.mr-2(href=`/doanhthu/${loaiDoanhThu==="NGÀY"?'ngay':'thang'}/${idBaoCaoDoanhThu}.pdf`) In doanh thu
+      a.btn.btn-primary(href=`/doanhthu/${loaiDoanhThu==="NGÀY"?'ngay':'thang'}/${idBaoCaoDoanhThu}.pdf`, download=`${loaiDoanhThu}: ${thoiDiem}`) Tải báo cáo doanh thu
