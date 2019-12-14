@@ -1,31 +1,31 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
-const leTanRoute = require('./routers/letan.router');
+const leTanRoute = require("./routers/letan.router");
+const authRoute = require('./routers/auth.router');
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser('ashdgf33%^aasdf'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser("ashdgf33%^aasdf"));
 
-app.set('views', './views');
-app.set('view engine', 'pug');
-app.use(express.static('public'));
+app.set("views", "./views");
+app.set("view engine", "pug");
+app.use(express.static("public"));
 
+app.get("/", (req, res, next) => res.send("Hello"));
 
-app.get('/', (req, res, next) => res.send('Hello'));
-
-
-app.use('/letan', leTanRoute);
+app.use('/login', authRoute);
+app.use("/letan", leTanRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).render('errors', {
-    title: 'Errors',
+  res.status(500).render("errors", {
+    title: "Errors",
     err: err
   });
 });
 
-app.listen(3000, () => console.log('Server is running'));
+app.listen(3000, () => console.log("Server is running"));

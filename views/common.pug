@@ -1,0 +1,44 @@
+html(lang="vi")
+  head
+    title= title
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/styles/bootstrap.min.css")
+    link(rel="stylesheet", href="/styles/danhsachPhong.css")
+    link(rel="stylesheet", href="/styles/fontawesome-free/css/all.min.css")
+    script(src="/scripts/jquery.js")
+    script(src="/scripts/popper.min.js")
+    script(src="/scripts/bootstrap.min.js")
+  body
+    img.img-fluid(src="/images/banner2.jpg", alt="Banner")
+    
+    block content
+    
+    footer.footer.text-center.bg-info.py-4
+      .container
+        .row
+          // Footer Location
+          .col-lg-4.mb-3.mb-lg-0
+            ul.list-unstyled.mb-0
+              li
+                i.fas.fa-envelope.mt-4.fa-2x
+                p vitaminsea@gmail
+          // Footer Social Icons
+          .col-lg-4.mb-3.mb-lg-0
+            h4.text-uppercase.mb-4 Contact with us
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-facebook-f
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-twitter
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-linkedin-in
+            a.btn.btn-outline-light.btn-social.mx-1(href='https://www.facebook.com/thanghai.trando')
+              i.fab.fa-fw.fa-dribbble
+            h4.text-uppercase.mb-4
+          // Footer About Text
+          .col-lg-4
+            h5.mt-md-4 About us
+            p Vitamin Sea Team
+    section.copyright.py-4.text-center.text-black.text-lg.bg-secondary
+      .container
+        small Copyright &copy; Vitamin Sea website
