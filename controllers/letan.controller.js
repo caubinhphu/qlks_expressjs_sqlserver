@@ -149,7 +149,7 @@ module.exports.postThuePhong = async (req, res, next) => {
     for (let i in data) {
       request.input(i, data[i]);
     }
-    request.input("MANV", "FO001");
+    request.input("MANV", req.signedCookies.user);
     await request.execute("SP_THEMPHIEU");
 
     res.redirect(`/letan/phong/${data.MAPHONG}`);
@@ -275,7 +275,7 @@ module.exports.postTraPhong = async (req, res, next) => {
     await pool.connect();
     var request1 = new sql.Request(pool);
     request1.input("MAPHONG", data.MAPHONG);
-    request1.input("MANV", "FO001");
+    request1.input("MANV", req.signedCookies.user);
     await request1.execute("SP_TRAPHONG_B1"); // trả phòng bước 1
 
     if (data.tonthat) {
@@ -381,6 +381,7 @@ module.exports.postDoanhThuNgay = async (req, res, next) => {
     console.log(pathDT);
 
     res.render("letan/doanhthu", {
+      title: 'Vitamin Sea hotel: Doanh thu',
       loaiDoanhThu: "NGÀY",
       thoiDiem: `${arr[2]}/${arr[1]}/${arr[0]}`,
       dsDTPhong: doanhThu.recordset,

@@ -2,15 +2,15 @@ extends ../common
 
 block content
   nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-    a.navbar-brand(href='/ketoan') KẾ TOÁN
+    a.navbar-brand(href='/ketoan/ds-thuephong') KẾ TOÁN
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse.text-right
       ul.navbar-nav.mr-auto
         li.nav-item(class=active==='tab1'?'active':'')
-          a.nav-link(href='/ketoan') Thuê phòng
+          a.nav-link(href='/ketoan/ds-thuephong') Danh sách thuê phòng
         li.nav-item(class=active==='tab2'?'active':'')
-          a.nav-link(href='/ketoan/dichvu') Thuê dịch vụ
+          a.nav-link(href='/ketoan/ds-thuedichvu') Danh sách thuê dịch vụ
         li.nav-item.dropdown(class=active==='tab3'?'active':'')
           a#navbarDropdown.nav-link.dropdown-toggle(href='/ketoan/doanhthu', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             | Doanh thu

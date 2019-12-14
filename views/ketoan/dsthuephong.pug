@@ -1,0 +1,55 @@
+extends ./common
+
+block main
+  .p-4
+    h2.text-center DANH SÁCH CÁC PHIẾU ĐANG THUÊ PHÒNG
+    table.table.table-hover.table-sm
+        thead.thead-light
+          tr
+            th Số phiếu
+            th Mã khách
+            th Mã phòng
+            th Mã nhân viên
+            th Ngày lập phiếu
+            th Ngày đến
+            th Ngày đi
+            th Số người
+            th Giá phòng
+        tbody
+          each phieu in dsPhieuDang
+            tr
+              td= phieu.SO_PHIEU
+              td= phieu.MAKHACH
+              td= phieu.MAPHONG
+              td= phieu.MA_NHANVIEN
+              td= phieu.NGAYLAP_PHIEU
+              td= phieu.NGAYDEN
+              td= phieu.NGAYDI
+              td= phieu.SONGUOI
+              td= phieu.GIAPHONG
+    hr
+    h2.text-center DANH SÁCH CÁC PHIẾU ĐANG THUÊ PHÒNG
+    table.table.table-hover.table-sm
+        thead.thead-light
+          tr
+            th Số phiếu
+            th Mã khách
+            th Mã phòng
+            th Mã nhân viên
+            th Ngày lập phiếu
+            th Ngày đến
+            th Ngày đi
+            th Số người
+            th Giá phòng
+        tbody
+          each phieu in dsPhieuDa
+            tr
+              td= phieu.SO_PHIEU
+              td= phieu.MAKHACH
+              td= phieu.MAPHONG
+              td= phieu.MA_NHANVIEN
+              td= phieu.NGAYLAP_PHIEU
+              td= phieu.NGAYDEN
+              td= phieu.NGAYDI
+              td= phieu.SONGUOI
+              td= phieu.GIAPHONG
