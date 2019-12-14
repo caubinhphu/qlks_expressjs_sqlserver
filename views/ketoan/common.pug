@@ -1,0 +1,65 @@
+extends ../common
+
+block content
+  nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+    a.navbar-brand(href='/ketoan') KẾ TOÁN
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse.text-right
+      ul.navbar-nav.mr-auto
+        li.nav-item(class=active==='tab1'?'active':'')
+          a.nav-link(href='/ketoan') Thuê phòng
+        li.nav-item(class=active==='tab2'?'active':'')
+          a.nav-link(href='/ketoan/dichvu') Thuê dịch vụ
+        li.nav-item.dropdown(class=active==='tab3'?'active':'')
+          a#navbarDropdown.nav-link.dropdown-toggle(href='/ketoan/doanhthu', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            | Doanh thu
+          .dropdown-menu(aria-labelledby='navbarDropdown').text-right
+            a.dropdown-item(href='#doanhthu-ngay', data-toggle="modal") Theo ngày
+            a.dropdown-item(href='#doanhthu-tuan', data-toggle="modal") Theo tuần
+            a.dropdown-item(href='#doanhthu-thang', data-toggle="modal") Theo tháng
+            a.dropdown-item(href='#doanhthu-nam', data-toggle="modal") Theo năm
+      if user
+        .d-flex.justify-content-end.align-items-center
+            b.mr-2.text-light= user
+            a.btn.btn-outline-secondary(href='/login/logout') Đăng xuất
+
+  #doanhthu-ngay.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Ngày cần tính doanh thu
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/ketoan/doanhthu/ngay", method="post")
+            input.form-control(type="date", name="ngay", min="2010-01-01", max=`${(new Date).getFullYear()}-12-31`)
+            .modal-footer
+              button.btn.btn-primary(type="submit") Tính doanh thu
+
+  #doanhthu-thang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Tháng cần tính doanh thu
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/ketoan/doanhthu/thang", method="post")
+            .form-group
+              label Tháng
+              select.form-control(name="THANG")
+                each t in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                  option(value=t)= t
+            .form-group
+              label Năm
+              select.form-control(name="NAM")
+                - var n = (new Date).getFullYear();
+                - var nam = 2010
+                while nam <= n
+                  option(value=nam)= nam
+                  - nam++
+            .modal-footer
+              button.btn.btn-primary(type='submit') Tính doanh thu
+
+  block main

@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const leTanRoute = require("./routers/letan.router");
 const authRoute = require('./routers/auth.router');
 
+const authMiddleware = require('./middlewares/auth.middleware');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -15,10 +17,10 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 app.use(express.static("public"));
 
-app.get("/", (req, res, next) => res.send("Hello"));
+app.get("/", (req, res, next) => res.redirect('/login'));
 
 app.use('/login', authRoute);
-app.use("/letan", leTanRoute);
+app.use("/letan", authMiddleware.login, leTanRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);
