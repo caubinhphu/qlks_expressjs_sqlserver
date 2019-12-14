@@ -17,6 +17,10 @@ block content
           .dropdown-menu(aria-labelledby='navbarDropdown').text-right
             a.dropdown-item(href='#doanhthu-ngay', data-toggle="modal") Theo ngày
             a.dropdown-item(href='#doanhthu-thang', data-toggle="modal") Theo tháng
+      if user
+        .d-flex.justify-content-end.align-items-center
+            b.mr-2.text-light= user
+            a.btn.btn-outline-secondary(href='/login/logout') Đăng xuất
 
   #doanhthu-ngay.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
     .modal-dialog(role='document')

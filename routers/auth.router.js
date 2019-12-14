@@ -6,5 +6,8 @@ const router = express.Router();
 
 router.get('/', controller.indexAuth);
 
+router.get('/logout', controller.logout);
+
+router.post('/', controller.postAuth);
 
 module.exports = router;
