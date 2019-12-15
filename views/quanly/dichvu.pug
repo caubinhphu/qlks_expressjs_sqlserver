@@ -1,0 +1,18 @@
+extends ./common
+
+block main
+  .container.py-5
+    h2.text-center THỐNG KÊ DỊCH VỤ
+
+    table.table.table-hover.table-sm
+      thead.thead-light
+        tr.text-center
+          th Mã dịch vụ
+          th Tên dịch vụ
+          th Số lần được thuê
+      tbody
+        each dv in dsThongKe
+          tr.text-center
+            td= dv.MA_DICHVU
+            td= dv.TEN_DICHVU
+            td= dv.SL

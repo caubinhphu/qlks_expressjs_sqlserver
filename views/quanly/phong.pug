@@ -1,0 +1,16 @@
+extends ./common
+
+block main
+  .container.py-5
+    h2.text-center THỐNG KÊ PHÒNG
+
+    table.table.table-hover.table-sm
+      thead.thead-light
+        tr.text-center
+          th Mã phòng
+          th Số lần được thuê
+      tbody
+        each p in dsThongKe
+          tr.text-center
+            td= p.MA_PHONG
+            td= p.SL

@@ -6,6 +6,7 @@ const leTanRoute = require("./routers/letan.router");
 const authRoute = require("./routers/auth.router");
 const keToanRoute = require("./routers/ketoan.router");
 const vatTuRoute = require('./routers/vattu.router');
+const quanLyRoute = require('./routers/quanly.router');
 
 const authMiddleware = require("./middlewares/auth.middleware");
 const isLeTanMiddleWare = require('./middlewares/isletan.middleware');
@@ -28,6 +29,7 @@ app.use("/login", authRoute);
 app.use("/letan", authMiddleware.login, isLeTanMiddleWare.isLeTan, leTanRoute);
 app.use("/ketoan", authMiddleware.login, isKeToanMiddleware.isKeToan, keToanRoute);
 app.use('/vattu', authMiddleware.login, isVatTuMiddleware.isVatTu, vatTuRoute);
+app.use('/quanly', quanLyRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);

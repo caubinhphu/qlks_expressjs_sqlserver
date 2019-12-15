@@ -2,20 +2,25 @@ extends ../common
 
 block content
   nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-    a.navbar-brand(href='/vattu/phong') QUẢN LÝ
+    a.navbar-brand(href='/quanly/thongke-loaiphong') QUẢN LÝ
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse.text-right
       ul.navbar-nav.mr-auto
-        li.nav-item.dropdown(class=active==='tab1'?'active':'')
+        li.nav-item(class=active==='tab1'?'active':'')
+          a.nav-link(href='/quanly/thongke-loaiphong') Thống kê loại phòng
+        li.nav-item(class=active==='tab2'?'active':'')
+          a.nav-link(href='/quanly/thongke-phong') Thống kê phòng
+        li.nav-item(class=active==='tab3'?'active':'')
+          a.nav-link(href='/quanly/thongke-dichvu') Thống kê dịch vụ
+        li.nav-item.dropdown(class=active==='tab4'?'active':'')
           a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             | Cập nhật giá
           .dropdown-menu(aria-labelledby='navbarDropdown').text-right
             a.dropdown-item(href='#gia-loaiphong', data-toggle="modal") Giá loại phòng
             a.dropdown-item(href='#gia-phong', data-toggle="modal") Giá phòng
             a.dropdown-item(href='#gia-dichvu', data-toggle="modal") Giá dịch vụ
-        li.nav-item(class=active==='tab2'?'active':'')
-          a.nav-link(href='/vattu/tonthat') Thống kê tổn thất
+        
       if user
         .d-flex.justify-content-end.align-items-center
             b.mr-2.text-light= user
