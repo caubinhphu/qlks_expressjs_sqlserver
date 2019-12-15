@@ -1,0 +1,19 @@
+extends ../common
+
+block content
+  nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+    a.navbar-brand(href='/vattu/phong') VỆ SINH, VẬT TƯ
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse.text-right
+      ul.navbar-nav.mr-auto
+        li.nav-item(class=active==='tab1'?'active':'')
+          a.nav-link(href='/vattu/phong') Phòng
+        li.nav-item(class=active==='tab2'?'active':'')
+          a.nav-link(href='/vattu/tonthat') Thống kê tổn thất
+      if user
+        .d-flex.justify-content-end.align-items-center
+            b.mr-2.text-light= user
+            a.btn.btn-outline-secondary(href='/login/logout') Đăng xuất
+
+  block main

@@ -16,7 +16,6 @@ block content
             | Doanh thu
           .dropdown-menu(aria-labelledby='navbarDropdown').text-right
             a.dropdown-item(href='#doanhthu-ngay', data-toggle="modal") Theo ngày
-            a.dropdown-item(href='#doanhthu-tuan', data-toggle="modal") Theo tuần
             a.dropdown-item(href='#doanhthu-thang', data-toggle="modal") Theo tháng
             a.dropdown-item(href='#doanhthu-nam', data-toggle="modal") Theo năm
       if user
@@ -51,6 +50,25 @@ block content
               select.form-control(name="THANG")
                 each t in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
                   option(value=t)= t
+            .form-group
+              label Năm
+              select.form-control(name="NAM")
+                - var n = (new Date).getFullYear();
+                - var nam = 2010
+                while nam <= n
+                  option(value=nam)= nam
+                  - nam++
+            .modal-footer
+              button.btn.btn-primary(type='submit') Tính doanh thu
+  #doanhthu-nam.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Năm cần tính doanh thu
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/ketoan/doanhthu/nam", method="post")
             .form-group
               label Năm
               select.form-control(name="NAM")

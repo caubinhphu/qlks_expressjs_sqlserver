@@ -1,0 +1,50 @@
+extends ./common
+
+block main
+  h1.text-center.my-4 Danh sách phòng
+
+  #dsphong.d-flex.mx-md-4
+    .d-flex.justify-content-around.flex-wrap.my-4
+      each phong in dsPhong
+        .phong(data-toggle="collapse", data-target=`#trangthai-${phong.MA_PHONG}`)
+          .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAULP}`)
+            p.phong-text= phong.MA_PHONG
+          .phong-trangthai(style=`background-color: ${phong.MAUTT}`)
+    each phong in dsPhong
+      .my-4
+        .collapse.p-2(id=`trangthai-${phong.MA_PHONG}`, data-parent="#dsphong", style="background-color: #b3d7ff; border: 2px solid black; border-radius: 10px")
+          div(style="width: max-content")
+            .text-center.mb-3
+              b Thông tin phòng
+            p= `Số phòng: ${phong.MA_PHONG}`
+            p= `Loại phòng: ${phong.TEN_LOAIPHONG}`
+            p Trạng thái phòng
+            form(action=`/vattu/phong/${phong.MA_PHONG}`, method="post")
+              select.form-control(name="MA_TT")
+                each trangThai in dsTrangThai
+                  option(value=trangThai.MA_TRANGTHAI)= trangThai.TEN_TRANGTHAI
+              .text-right.mt-2
+                button.btn.btn-success(type="submit") Cập nhật
+  hr
+  .d-flex.m-4.justify-content-around.flex-wrap
+    div
+      .text-center
+        b(style="font-size: 20px") Loại phòng
+      .my-2
+        each loaiPhong in dsLoaiPhong
+          .d-flex.align-items-center.my-2
+            div.mr-2
+              .chuthich-loaiphong(style=`background-color: ${loaiPhong.MAMAU}`)
+            .d-flex.align-items-center
+              p.my-auto= loaiPhong.TEN_LOAIPHONG
+    div
+      .text-center
+        b(style="font-size: 20px") Trạng thái phòng
+      .my-2
+        each trangThai in dsTrangThai
+          .d-flex.align-items-center.my-2
+            div.mr-2
+              .chuthich-trangthai(style=`background-color: ${trangThai.MAMAU}`)
+            .d-flex.align-items-center
+              p.my-auto= trangThai.TEN_TRANGTHAI
+
