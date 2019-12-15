@@ -9,10 +9,12 @@ block main
         tr.text-center
           th Mã dịch vụ
           th Tên dịch vụ
+          th Giá dịch vụ
           th Số lần được thuê
       tbody
         each dv in dsThongKe
           tr.text-center
             td= dv.MA_DICHVU
             td= dv.TEN_DICHVU
+            td= dv.GIA_DICHVU
             td= dv.SL

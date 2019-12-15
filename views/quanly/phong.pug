@@ -8,9 +8,11 @@ block main
       thead.thead-light
         tr.text-center
           th Mã phòng
+          th Giá phòng
           th Số lần được thuê
       tbody
         each p in dsThongKe
           tr.text-center
             td= p.MA_PHONG
+            td= p.GIAPHONG
             td= p.SL

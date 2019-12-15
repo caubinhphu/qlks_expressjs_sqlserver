@@ -9,10 +9,12 @@ block main
         tr.text-center
           th Mã loại phòng
           th Tên loại phòng
+          th Giá tiêu chuẩn
           th Số lần được thuê
       tbody
         each lp in dsThongKe
           tr.text-center
             td= lp.MALOAIPHONG
             td= lp.TENLOAIPHONG
+            td= lp.GIA_TIEUCHUAN
             td= lp.SL

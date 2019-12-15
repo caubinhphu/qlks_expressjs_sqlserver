@@ -17,13 +17,70 @@ block content
           a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             | Cập nhật giá
           .dropdown-menu(aria-labelledby='navbarDropdown').text-right
-            a.dropdown-item(href='#gia-loaiphong', data-toggle="modal") Giá loại phòng
-            a.dropdown-item(href='#gia-phong', data-toggle="modal") Giá phòng
-            a.dropdown-item(href='#gia-dichvu', data-toggle="modal") Giá dịch vụ
+            a.dropdown-item(href='#capnhat-loaiphong', data-toggle="modal") Giá loại phòng
+            a.dropdown-item(href='#capnhat-phong', data-toggle="modal") Giá phòng
+            a.dropdown-item(href='#capnhat-dichvu', data-toggle="modal") Giá dịch vụ
         
       if user
         .d-flex.justify-content-end.align-items-center
             b.mr-2.text-light= user
             a.btn.btn-outline-secondary(href='/login/logout') Đăng xuất
 
+  #capnhat-loaiphong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Cập nhật giá tiêu chuẩn loại phòng
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/quanly/capnhat-gia-loaiphong", method="post")
+            .form-group
+              label Loại phòng
+              select.form-control(name="MALP")
+                each lp in dsLoaiPhong
+                  option(value=lp.MA_LOAIPHONG)= lp.TEN_LOAIPHONG
+            .form-group
+              label(for="gia-lp") Giá tiêu chuẩn
+              input#gia-lp.form-control(type="number", min="50000", name="GIA")
+            .modal-footer
+              button.btn.btn-primary(type='submit') Cập nhật
+  #capnhat-phong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Cập nhật giá phòng
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/quanly/capnhat-gia-phong", method="post")
+            .form-group
+              label Phòng
+              select.form-control(name="MAP")
+                each p in dsPhong
+                  option(value=p.MA_PHONG)= p.MA_PHONG
+            .form-group
+              label(for="gia-p") Giá phòng
+              input#gia-p.form-control(type="number", min="50000", name="GIA")
+            .modal-footer
+              button.btn.btn-primary(type='submit') Cập nhật
+  #capnhat-dichvu.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5#exampleModalLabel.modal-title Cập nhật giá dịch vụ
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/quanly/capnhat-gia-dichvu", method="post")
+            .form-group
+              label Dịch vụ
+              select.form-control(name="MADV")
+                each dv in dsDichVu
+                  option(value=dv.MA_DICHVU)= dv.TEN_DICHVU
+            .form-group
+              label(for="gia-dv") Giá dịch vụ
+              input#gia-dv.form-control(type="number", min="10000", name="GIA")
+            .modal-footer
+              button.btn.btn-primary(type='submit') Cập nhật
   block main
