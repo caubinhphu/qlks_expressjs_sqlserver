@@ -33,7 +33,7 @@ module.exports.postAuth = async (req, res, next) => {
     } else if (user.BP === 'KH') {
       res.redirect('/vattu/phong');
     } else if (user.BP === 'MN') {
-      res.redirect('/quanly');
+      res.redirect('/quanly/thongke-loaiphong');
     } 
   } catch(err) {
     next(err);

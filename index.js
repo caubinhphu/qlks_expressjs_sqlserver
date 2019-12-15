@@ -12,6 +12,7 @@ const authMiddleware = require("./middlewares/auth.middleware");
 const isLeTanMiddleWare = require('./middlewares/isletan.middleware');
 const isKeToanMiddleware = require('./middlewares/isketoan.middleware');
 const isVatTuMiddleware = require('./middlewares/isvattu.middleware');
+const isQuanLyMiddleware = require('./middlewares/isquanly.middleware');
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use("/login", authRoute);
 app.use("/letan", authMiddleware.login, isLeTanMiddleWare.isLeTan, leTanRoute);
 app.use("/ketoan", authMiddleware.login, isKeToanMiddleware.isKeToan, keToanRoute);
 app.use('/vattu', authMiddleware.login, isVatTuMiddleware.isVatTu, vatTuRoute);
-app.use('/quanly', quanLyRoute);
+app.use('/quanly', authMiddleware.login, isQuanLyMiddleware.isQuanLy, quanLyRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);

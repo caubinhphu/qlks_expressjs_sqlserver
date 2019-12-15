@@ -6,25 +6,28 @@ block main
   #dsphong.d-flex.mx-md-4
     .d-flex.justify-content-around.flex-wrap.my-4
       each phong in dsPhong
-        .phong(data-toggle="collapse", data-target=`#trangthai-${phong.MA_PHONG}`)
+        .phong(data-toggle="modal", data-target=`#trangthai-${phong.MA_PHONG}`)
           .d-flex.justify-content-center.align-items-center.phong-loaiphong(style=`background-color: ${phong.MAULP}`)
             p.phong-text= phong.MA_PHONG
           .phong-trangthai(style=`background-color: ${phong.MAUTT}`)
     each phong in dsPhong
-      .my-4
-        .collapse.p-2(id=`trangthai-${phong.MA_PHONG}`, data-parent="#dsphong", style="background-color: #b3d7ff; border: 2px solid black; border-radius: 10px")
-          div(style="width: max-content")
-            .text-center.mb-3
-              b Thông tin phòng
-            p= `Số phòng: ${phong.MA_PHONG}`
-            p= `Loại phòng: ${phong.TEN_LOAIPHONG}`
-            p Trạng thái phòng
-            form(action=`/vattu/phong/${phong.MA_PHONG}`, method="post")
-              select.form-control(name="MA_TT")
-                each trangThai in dsTrangThai
-                  option(value=trangThai.MA_TRANGTHAI)= trangThai.TEN_TRANGTHAI
-              .text-right.mt-2
-                button.btn.btn-success(type="submit") Cập nhật
+      .modal.fade(id=`trangthai-${phong.MA_PHONG}`, tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              h5#exampleModalLabel.modal-title Thông tin phòng
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') &times;
+            .modal-body
+              p= `Số phòng: ${phong.MA_PHONG}`
+              p= `Loại phòng: ${phong.TEN_LOAIPHONG}`
+              p Trạng thái phòng
+              form(action=`/vattu/phong/${phong.MA_PHONG}`, method="post")
+                select.form-control(name="MA_TT")
+                  each trangThai in dsTrangThai
+                    option(value=trangThai.MA_TRANGTHAI)= trangThai.TEN_TRANGTHAI
+                .modal-footer
+                  button.btn.btn-success(type="submit") Cập nhật
   hr
   .d-flex.m-4.justify-content-around.flex-wrap
     div
