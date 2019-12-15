@@ -7,6 +7,8 @@ const authRoute = require("./routers/auth.router");
 const keToanRoute = require("./routers/ketoan.router");
 
 const authMiddleware = require("./middlewares/auth.middleware");
+const isLeTanMiddleWare = require('./middlewares/isletan.middleware');
+const isKeToanMiddleware = require('./middlewares/isketoan.middleware');
 
 const app = express();
 
@@ -21,8 +23,8 @@ app.use(express.static("public"));
 app.get("/", (req, res, next) => res.redirect("/login"));
 
 app.use("/login", authRoute);
-app.use("/letan", authMiddleware.login, leTanRoute);
-app.use("/ketoan", keToanRoute);
+app.use("/letan", authMiddleware.login, isLeTanMiddleWare.isLeTan, leTanRoute);
+app.use("/ketoan", authMiddleware.login, isKeToanMiddleware.isKeToan, keToanRoute);
 
 app.use((err, req, res, next) => {
   console.log(err);
