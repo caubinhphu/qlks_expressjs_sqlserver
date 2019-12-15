@@ -15,9 +15,10 @@ block main
             th Ngày đi
             th Số người
             th Giá phòng
+            th Chi tiết
         tbody
           each phieu in dsPhieuDang
-            tr
+            tr.text-center
               td= phieu.SO_PHIEU
               td= phieu.MAKHACH
               td= phieu.MAPHONG
@@ -27,6 +28,8 @@ block main
               td= phieu.NGAYDI
               td= phieu.SONGUOI
               td= phieu.GIAPHONG
+              td
+                a.btn.btn-info(href=`/ketoan/ds-thuephong/phieu/${phieu.SO_PHIEU}`) i
     hr
     h2.text-center DANH SÁCH CÁC PHIẾU ĐANG THUÊ PHÒNG
     table.table.table-hover.table-sm
@@ -41,9 +44,10 @@ block main
             th Ngày đi
             th Số người
             th Giá phòng
+            th Chi tiết
         tbody
           each phieu in dsPhieuDa
-            tr
+            tr.text-center
               td= phieu.SO_PHIEU
               td= phieu.MAKHACH
               td= phieu.MAPHONG
@@ -53,3 +57,5 @@ block main
               td= phieu.NGAYDI
               td= phieu.SONGUOI
               td= phieu.GIAPHONG
+              td
+                a.btn.btn-info(href=`/ketoan/ds-thuephong/phieu/${phieu.SO_PHIEU}`) i

@@ -2,6 +2,7 @@ extends ./common
 
 block main
   .p-4
+    a.btn.btn-secondary.m-2(href=history, style="cursor: pointer") Back
     h2.text-center DANH SÁCH THUÊ DỊCH VỤ
     table.table.table-hover.table-sm
         thead.thead-light
@@ -10,6 +11,7 @@ block main
             th Mã dịch vụ
             th Số lượng
             th Giá dịch vụ
+            th Chi tiết
         tbody
           each phieu in dsDang
             tr
@@ -17,6 +19,8 @@ block main
               td= phieu.MA_DICHVU
               td= phieu.SOLUONG
               td= phieu.GIA_DICHVU
+              td
+                a.btn.btn-info(href=`/ketoan/ds-thuephong/phieu/${phieu.SO_PHIEU}`) i
 
     hr
 
@@ -28,6 +32,7 @@ block main
             th Mã dịch vụ
             th Số lượng
             th Giá dịch vụ
+            th Chi tiết
         tbody
           each phieu in dsDa
             tr
@@ -35,3 +40,5 @@ block main
               td= phieu.MA_DICHVU
               td= phieu.SOLUONG
               td= phieu.GIA_DICHVU
+              td
+                a.btn.btn-info(href=`/ketoan/ds-thuephong/phieu/${phieu.SO_PHIEU}`) i

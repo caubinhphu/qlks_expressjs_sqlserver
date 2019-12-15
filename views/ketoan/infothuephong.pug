@@ -1,0 +1,76 @@
+extends ./common
+
+block main
+  .p-4
+    a.btn.btn-secondary.m-2(href=history, style="cursor: pointer") Back
+    h2.text-center THÔNG TIN THUÊ PHÒNG
+
+    .p-4
+      p Số phiếu: 
+          b= phieu.SO_PHIEU
+      .row
+        .col-md-6
+          p Mã khách
+            b= phieu.MAKHACH
+          p Họ tên khách: 
+            b= phieu.HOTEN_KHACH
+          p CMND/PASSPORT: 
+            b= phieu['CMND/PASSPORT']
+          p Quốc tịch: 
+            b= phieu.QUOCTICH
+          p Điện thoại: 
+            b= phieu.DIENTHOAI
+          p Mã phòng: 
+            b= phieu.MAPHONG
+          p Tên loại phòng: 
+            b= phieu.TEN_LOAIPHONG
+        .col-md-6
+          p Mã nhân viên: 
+            b= phieu.MA_NHANVIEN
+          p Tên nhân viên: 
+            b= phieu.HOTEN_NHANVIEN
+          p Ngày lập phiếu: 
+            b= phieu.NGAYLAP_PHIEU
+          p Ngày đến: 
+            b= phieu.NGAYDEN
+          p Ngày đi: 
+            b= phieu.NGAYDI
+          p Số người: 
+            b= phieu.SONGUOI
+          p Giá phòng: 
+            b= phieu.GIAPHONG + 'đ'
+      
+      hr
+      p.text-center Danh sách dịch vụ thêm
+      table.table.table-hover.table-sm
+        thead.thead-light
+          tr.text-center
+            th Mã dịch vụ
+            th Tên dịch vụ
+            th Số lượng
+            th Giá dịch vụ
+        tbody
+          each dv in dsThueDV
+            tr.text-center
+              td= dv.MA_DICHVU
+              td= dv.TEN_DICHVU
+              td= dv.SOLUONG
+              td= dv.GIA_DICHVU + 'đ'
+      
+      hr
+      p.text-center Danh sách tổn thất
+      table.table.table-hover.table-sm
+        thead.thead-light
+          tr.text-center
+            th Mã vật tư
+            th Tên vật tư
+            th Số lượng
+            th Chi phí bồi thường / 1 vật tư
+        tbody
+          each tt in dsTonThat
+            tr.text-center
+              td= tt.MA_VATTU
+              td= tt.TEN_VATTU
+              td= tt.SOLUONG
+              td= tt.CHIPHI_BOITHUONG + 'đ'
+  

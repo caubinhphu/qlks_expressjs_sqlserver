@@ -16,4 +16,6 @@ router.post("/doanhthu/thang", controller.postDoanhThuThang);
 
 router.post("/doanhthu/nam", controller.postDoanhThuNam);
 
+router.get('/ds-thuephong/phieu/:soPhieu', controller.getInfoPhieu);
+
 module.exports = router;

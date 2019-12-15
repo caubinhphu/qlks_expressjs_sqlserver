@@ -53,3 +53,25 @@ module.exports.postDoanhThuThang = async (req, res, next) => {
 module.exports.postDoanhThuNam = async (req, res, next) => {
 
 };
+
+module.exports.getInfoPhieu = async (req, res, next) => {
+  try {
+    await pool.connect();
+    var requset = new sql.Request(pool);
+    requset.input('SOPHIEU', parseInt(req.params.soPhieu));
+    var result = await requset.execute('SP_INFO_THUEPHONG');
+    // res.json(result);
+    res.render('ketoan/infothuephong', {
+      title: 'Vitamin Sea Hotel: Info thuê phòng',
+      active: 'tab1',
+      phieu: result.recordsets[0][0],
+      dsThueDV: result.recordsets[1],
+      dsTonThat: result.recordsets[2],
+      history: req.headers.referer
+    });
+  } catch(err) {
+    next(err);
+  } finally {
+    await pool.close();
+  }
+};
