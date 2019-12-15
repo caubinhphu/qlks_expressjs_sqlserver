@@ -324,7 +324,16 @@ module.exports.postTraPhong = async (req, res, next) => {
     request4.input("MAPHONG", data.MAPHONG);
     await request4.execute("SP_TRAPHONG_B4"); // trả phòng bước 4
 
-    res.redirect(`/hoadon/${hoaDon.recordset[0].SO_PHIEU}.pdf`);
+    // res.redirect(`/hoadon/${hoaDon.recordset[0].SO_PHIEU}.pdf`);
+    res.render('letan/hoadon', {
+      title: 'Vitamion Sea Hotel: Hóa đơn thanh toán',
+      active: 'tab1',
+      user: req.signedCookies.user,
+      khach: hoaDon.recordsets[0][0],
+      doiTuong: hoaDon.recordsets[1],
+      thanhTien: hoaDon.recordsets[2][0]
+    });
+
   } catch (err) {
     next(err);
   } finally {
@@ -341,98 +350,6 @@ module.exports.postPhong = async (req, res, next) => {
     request.input("MA_TT", req.body.MA_TT);
     await request.execute("SP_CAPNHAT_TRANGTHAIPHONG");
     res.redirect(`/letan/phong/${phong}`);
-  } catch (err) {
-    next(err);
-  } finally {
-    await pool.close();
-  }
-};
-
-module.exports.postDoanhThuNgay = async (req, res, next) => {
-  var arr = req.body.ngay.split("-").map(x => parseInt(x));
-  try {
-    await pool.connect();
-    var request = new sql.Request(pool);
-    request.input("NGAY", arr[2]);
-    request.input("THANG", arr[1]);
-    request.input("NAM", arr[0]);
-
-    var doanhThu = await request.execute("SP_DOANHTHU_NGAY");
-
-    var templateDoanhThu = await readFile("./public/doanhthu/template.html");
-    var bodyDoanhThu = doanhThu.recordsets[0].reduce((str, dt) => {
-      return (str += `<tr style="text-align: center"><td style="border: 1px solid black">${dt.MAPHONG}</td><td style="border: 1px solid black">${dt.TIENPHONG}</td><td style="border: 1px solid black">${dt.TIENDICHVU}</td><td style="border: 1px solid black">${dt.DOANHTHUPHONG}</td></tr>`);
-    }, "");
-    var fileDoanhThuHTML = templateDoanhThu
-      .replace("#loaidt", "NGÀY")
-      .replace("#thoidiem", `${arr[2]}/${arr[1]}/${arr[0]}`)
-      .replace("#body", bodyDoanhThu)
-      .replace("#tongcong", doanhThu.recordsets[1][0].TONGDOANHTHU);
-    var idBaoCaoDoanhThu = shortid.generate();
-
-    // pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
-    //   if (err) return console.log(err);
-    //   console.log(res);
-    // });
-    var pathDT = await createPdf(
-      fileDoanhThuHTML,
-      `./public/doanhthu/ngay/${idBaoCaoDoanhThu}.pdf`
-    );
-    console.log(pathDT);
-
-    res.render("letan/doanhthu", {
-      title: 'Vitamin Sea hotel: Doanh thu',
-      loaiDoanhThu: "NGÀY",
-      thoiDiem: `${arr[2]}/${arr[1]}/${arr[0]}`,
-      dsDTPhong: doanhThu.recordset,
-      tongDT: doanhThu.recordsets[1][0],
-      idBaoCaoDoanhThu: idBaoCaoDoanhThu,
-      user: req.signedCookies.user
-    });
-  } catch (err) {
-    next(err);
-  } finally {
-    await pool.close();
-  }
-};
-
-module.exports.postDoanhThuThang = async (req, res, next) => {
-  try {
-    await pool.connect();
-    var request = new sql.Request(pool);
-    request.input("THANG", parseInt(req.body.THANG));
-    request.input("NAM", parseInt(req.body.NAM));
-
-    var doanhThu = await request.execute("SP_DOANHTHU_THANG");
-
-    var templateDoanhThu = await readFile("./public/doanhthu/template.html");
-    var bodyDoanhThu = doanhThu.recordsets[0].reduce((str, dt) => {
-      return (str += `<tr style="text-align: center"><td style="border: 1px solid black">${dt.MAPHONG}</td><td style="border: 1px solid black">${dt.TIENPHONG}</td><td style="border: 1px solid black">${dt.TIENDICHVU}</td><td style="border: 1px solid black">${dt.DOANHTHUPHONG}</td></tr>`);
-    }, "");
-    var fileDoanhThuHTML = templateDoanhThu
-      .replace("#loaidt", "THÁNG")
-      .replace("#thoidiem", req.body.THANG + "/" + req.body.NAM)
-      .replace("#body", bodyDoanhThu)
-      .replace("#tongcong", doanhThu.recordsets[1][0].TONGDOANHTHU);
-    var idBaoCaoDoanhThu = shortid.generate();
-    // pdf.create(fileDoanhThuHTML, { format: 'Letter' }).toFile(`./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`, function(err, res) {
-    //   if (err) return console.log(err);
-    //   console.log(res);
-    // });
-    var pathDT = await createPdf(
-      fileDoanhThuHTML,
-      `./public/doanhthu/thang/${idBaoCaoDoanhThu}.pdf`
-    );
-    console.log(pathDT);
-
-    res.render("letan/doanhthu", {
-      loaiDoanhThu: "THÁNG",
-      thoiDiem: req.body.THANG + "/" + req.body.NAM,
-      dsDTPhong: doanhThu.recordset,
-      tongDT: doanhThu.recordsets[1][0],
-      idBaoCaoDoanhThu: idBaoCaoDoanhThu,
-      user: req.signedCookies.user
-    });
   } catch (err) {
     next(err);
   } finally {

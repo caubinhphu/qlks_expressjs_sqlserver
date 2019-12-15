@@ -2,11 +2,10 @@ extends ./common
 
 block main
   .p-4
-    a.btn.btn-secondary.m-2(href=history, style="cursor: pointer") Back
     h2.text-center DANH SÁCH THUÊ DỊCH VỤ
     table.table.table-hover.table-sm
         thead.thead-light
-          tr
+          tr.text-center
             th Số phiếu
             th Mã dịch vụ
             th Số lượng
@@ -14,7 +13,7 @@ block main
             th Chi tiết
         tbody
           each phieu in dsDang
-            tr
+            tr.text-center
               td= phieu.SO_PHIEU
               td= phieu.MA_DICHVU
               td= phieu.SOLUONG
@@ -27,7 +26,7 @@ block main
     h2.text-center DANH SÁCH LƯU THUÊ DỊCH VỤ
     table.table.table-hover.table-sm
         thead.thead-light
-          tr
+          tr.text-center
             th Số phiếu
             th Mã dịch vụ
             th Số lượng
@@ -35,7 +34,7 @@ block main
             th Chi tiết
         tbody
           each phieu in dsDa
-            tr
+            tr.text-center
               td= phieu.SO_PHIEU
               td= phieu.MA_DICHVU
               td= phieu.SOLUONG

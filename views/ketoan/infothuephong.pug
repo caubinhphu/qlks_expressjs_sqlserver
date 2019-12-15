@@ -74,3 +74,30 @@ block main
               td= tt.SOLUONG
               td= tt.CHIPHI_BOITHUONG + 'đ'
   
+      hr
+      p.text-center Bảng thanh toán
+      table.table.table-hover.table-sm
+        thead.thead-light
+          tr.text-center
+            th Đối tượng
+            th LOẠI
+            th Số lượng
+            th Đơn giá
+            th Thành tiền
+        tbody
+          each dt in thanhToan
+            tr.text-center
+              td= dt.DOITUONG
+              td= dt.LOAI
+              td= dt.SOLUONG
+              td= dt.DONGIA
+              td= dt.THANHTIEN
+          tr
+            td(colspan="4") Tổng
+            td.text-center= thanhTien.TONGTIEN
+          tr
+            td(colspan="4") Phí VAT
+            td.text-center 10%
+          tr
+            td(colspan="4") Tổng cộng
+            td.text-center= thanhTien.TONGTIENTHANHTOAN

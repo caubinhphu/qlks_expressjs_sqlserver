@@ -1,0 +1,44 @@
+extends ./common
+
+block main
+  .container.my-4
+    p Số phiếu: 
+      span= khach.SO_PHIEU
+    h2.mt-4.text-center HÓA ĐƠN THANH TOÁN
+    p Họ tên khách: 
+      span= khach.HOTEN_KHACH
+    p CMND/PASSPORT: 
+      span= khach["CMND/PASSPORT"]
+    p Quốc tịch: 
+      span= khach.QUOCTICH
+    p Điện thoại: 
+      span= khach.DIENTHOAI
+    table.table.table-hover.table-sm
+      thead.thead-light
+        tr.text-center
+          th Đối tượng
+          th LOẠI
+          th Số lượng
+          th Đơn giá
+          th Thành tiền
+      tbody
+        each dt in doiTuong
+          tr.text-center
+            td= dt.DOITUONG
+            td= dt.LOAI
+            td= dt.SOLUONG
+            td= dt.DONGIA
+            td= dt.THANHTIEN
+        tr
+          td(colspan="4") Tổng cộng
+          td.text-center= thanhTien.TONGTIEN
+        tr
+          td(colspan="4") Phí VAT
+          td.text-center 10%
+        tr
+          td(colspan="4") Tổng tiền thanh toán
+          td.text-center= thanhTien.TONGTIENTHANHTOAN
+
+    .text-right
+      a.btn.btn-primary.mr-2(href=`/hoadon/${khach.SO_PHIEU}.pdf`, target="_blank") In hóa đơn
+      a.btn.btn-primary(href=`/hoadon/${khach.SO_PHIEU}.pdf`, download=`${khach.SO_PHIEU}`) Tải hóa đơn
