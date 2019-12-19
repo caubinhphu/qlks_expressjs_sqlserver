@@ -26,6 +26,7 @@ module.exports.postAuth = async (req, res, next) => {
 
     var user = result.recordset[0];
     res.cookie('user', user.MA_NHANVIEN, { signed: true });
+    res.cookie('SDN', true, { signed: true });
     if (user.BP === 'FO') {
       res.redirect('/letan');
     } else if (user.BP === 'CA') {

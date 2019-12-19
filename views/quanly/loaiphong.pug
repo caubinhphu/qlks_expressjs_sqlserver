@@ -18,3 +18,8 @@ block main
             td= lp.TENLOAIPHONG
             td= lp.GIA_TIEUCHUAN
             td= lp.SL
+block scripts
+  if (SDN)
+    script window.onload = function() {alert('Đăng nhập thành công')}
+  if (SCNGLP)
+    script window.onload = function() {alert('Cập nhật giá thành công')}

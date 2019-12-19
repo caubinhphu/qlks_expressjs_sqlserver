@@ -8,6 +8,13 @@ module.exports.getPhong = async (req, res, next) => {
     var request = new sql.Request(pool);
     var result = await request.execute("SP_DANHSACHPHONG_TRANGTHAI");
     var dsTrangThai = await request.execute("SP_DANHSACH_TRANGTHAI");
+    var SDN = false;
+    if (req.signedCookies) {
+      if (req.signedCookies.SDN === 'true') {
+        SDN = true;
+        res.clearCookie('SDN');
+      }
+    }
   } catch (err) {
     next(err);
   } finally {
@@ -21,7 +28,8 @@ module.exports.getPhong = async (req, res, next) => {
     dsTrangThai: result.recordsets[1],
     dsLoaiPhong: result.recordsets[2],
     dsTrangThai: dsTrangThai.recordset,
-    user: req.signedCookies.user
+    user: req.signedCookies.user,
+    SDN: SDN
   });
 };
 

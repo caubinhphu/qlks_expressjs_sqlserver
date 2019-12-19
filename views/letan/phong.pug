@@ -68,6 +68,14 @@ block main
     else
       .d-flex.justify-content-center.align-items-center
         a.btn.btn-primary(href="/letan/phong/thuephong") Cho thuê phòng
+block scripts
+  if (SCNTTP)
+    script window.onload = function() {alert('Cập nhật trạng thái phòng thành công')};
+  if (STK)
+    script window.onload = function() {alert('Cho thuê phòng thành công')};
+  if (STDV)
+    script window.onload = function() {alert('Thêm dịch vụ thành công')};
+    
         
     
 

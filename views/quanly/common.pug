@@ -42,7 +42,7 @@ block content
                   option(value=lp.MA_LOAIPHONG)= lp.TEN_LOAIPHONG
             .form-group
               label(for="gia-lp") Giá tiêu chuẩn
-              input#gia-lp.form-control(type="number", min="50000", name="GIA")
+              input#gia-lp.form-control(type="number", min="50000", name="GIA", value="50000")
             .modal-footer
               button.btn.btn-primary(type='submit') Cập nhật
   #capnhat-phong.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
@@ -61,7 +61,7 @@ block content
                   option(value=p.MA_PHONG)= p.MA_PHONG
             .form-group
               label(for="gia-p") Giá phòng
-              input#gia-p.form-control(type="number", min="50000", name="GIA")
+              input#gia-p.form-control(type="number", min="50000", name="GIA", value="50000")
             .modal-footer
               button.btn.btn-primary(type='submit') Cập nhật
   #capnhat-dichvu.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
@@ -80,7 +80,7 @@ block content
                   option(value=dv.MA_DICHVU)= dv.TEN_DICHVU
             .form-group
               label(for="gia-dv") Giá dịch vụ
-              input#gia-dv.form-control(type="number", min="10000", name="GIA")
+              input#gia-dv.form-control(type="number", min="10000", name="GIA", value="10000")
             .modal-footer
               button.btn.btn-primary(type='submit') Cập nhật
   block main

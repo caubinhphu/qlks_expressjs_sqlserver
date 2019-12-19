@@ -50,4 +50,7 @@ block main
               .chuthich-trangthai(style=`background-color: ${trangThai.MAMAU}`)
             .d-flex.align-items-center
               p.my-auto= trangThai.TEN_TRANGTHAI
+block scripts
+  if (SDN)
+    script window.onload = function() {alert('Đăng nhập thành công')}
 

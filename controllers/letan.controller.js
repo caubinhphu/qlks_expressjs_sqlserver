@@ -16,13 +16,21 @@ module.exports.index = async (req, res, next) => {
     await pool.close();
   }
 
+  var SDN = false;
+  if (req.signedCookies) {
+    if (req.signedCookies.SDN === 'true') {
+      SDN = true;
+      res.clearCookie('SDN');
+    }
+  }
   res.render("letan/index", {
     title: "Vitamin Sea: Phòng",
     active: "tab1",
     dsPhong: result.recordsets[0],
     dsTrangThai: result.recordsets[1],
     dsLoaiPhong: result.recordsets[2],
-    user: req.signedCookies.user
+    user: req.signedCookies.user,
+    SDN: SDN
   });
 };
 
@@ -94,6 +102,24 @@ module.exports.getPhong = async (req, res, next) => {
     var thuePhongInfo = await request.execute("SP_KHACH_THUEPHONG");
     var request2 = new sql.Request(pool);
     var dsTrangThai = await request2.execute("SP_DANHSACH_TRANGTHAI");
+    var SCNTTP = false;
+    var STK = false;
+    var STDV = false;
+
+    if (req.signedCookies) {
+      if (req.signedCookies.SCNTTP === 'true') {
+        SCNTTP = true;
+        res.clearCookie('SCNTTP');
+      }
+      if (req.signedCookies.STK === 'true') {
+        STK = true;
+        res.clearCookie('STK');
+      }
+      if (req.signedCookies.STDV === 'true') {
+        STDV = true;
+        res.clearCookie('STDV');
+      }
+    }
   } catch (err) {
     next(err);
   } finally {
@@ -107,7 +133,10 @@ module.exports.getPhong = async (req, res, next) => {
     thuePhongInfo: thuePhongInfo.recordset[0],
     dichVuThue: thuePhongInfo.recordsets[1],
     dsTrangThai: dsTrangThai.recordset,
-    user: req.signedCookies.user
+    user: req.signedCookies.user,
+    SCNTTP: SCNTTP,
+    STK: STK,
+    STDV: STDV
   });
 };
 
@@ -151,7 +180,7 @@ module.exports.postThuePhong = async (req, res, next) => {
     }
     request.input("MANV", req.signedCookies.user);
     await request.execute("SP_THEMPHIEU");
-
+    res.cookie('STK', true, { signed: true });
     res.redirect(`/letan/phong/${data.MAPHONG}`);
   } catch (err) {
     next(err);
@@ -200,7 +229,7 @@ module.exports.postThemDichVu = async (req, res, next) => {
       request.input(i, data[i]);
     }
     await request.execute("SP_THEM_THUE_DICHVU");
-
+    res.cookie('STDV', true, { signed: true });
     res.redirect(`/letan/phong/${data.MAPHONG}`);
   } catch (err) {
     next(err);
@@ -261,7 +290,7 @@ function createPdf(dataHTML, path) {
 
 module.exports.postTraPhong = async (req, res, next) => {
   var data = req.body;
-  for (let i in data) {
+  for (let i in data) {1
     if (data[i] === "") {
       data[i] = null;
     }
@@ -349,6 +378,7 @@ module.exports.postPhong = async (req, res, next) => {
     request.input("MAPHONG", phong);
     request.input("MA_TT", req.body.MA_TT);
     await request.execute("SP_CAPNHAT_TRANGTHAIPHONG");
+    res.cookie('SCNTTP', true, { signed: true });
     res.redirect(`/letan/phong/${phong}`);
   } catch (err) {
     next(err);

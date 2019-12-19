@@ -10,12 +10,20 @@ module.exports.thuePhong = async (req, res, next) => {
     await pool.connect();
     var request = new sql.Request(pool);
     var result = await request.execute("SP_DANHSACH_ALL_THUEPHONG");
+    var SDN = false;
+    if (req.signedCookies) {
+      if (req.signedCookies.SDN === 'true') {
+        SDN = true;
+        res.clearCookie('SDN');
+      }
+    }
     res.render("ketoan/dsthuephong", {
       active: "tab1",
       title: "Vitamin Sea hotel: Danh sách thuê phòng",
       dsPhieuDang: result.recordsets[0],
       dsPhieuDa: result.recordsets[1],
-      user: req.signedCookies.user
+      user: req.signedCookies.user,
+      SDN: SDN
     });
   } catch (err) {
     next(err);
