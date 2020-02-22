@@ -29,7 +29,7 @@ module.exports.index = async (req, res, next) => {
     dsPhong: result.recordsets[0],
     dsTrangThai: result.recordsets[1],
     dsLoaiPhong: result.recordsets[2],
-    user: req.signedCookies.user,
+    // user: req.signedCookies.user,
     SDN: SDN
   });
 };
@@ -51,7 +51,7 @@ module.exports.getKhach = async (req, res, next) => {
     active: "tab2",
     dsQT: dsQuocTich.recordset,
     dsKhach: result.recordset,
-    user: req.signedCookies.user
+    // user: req.signedCookies.user
   });
 };
 
@@ -89,7 +89,7 @@ module.exports.getKhachSearch = async (req, res, nex) => {
     values: data,
     dsQT: dsQuocTich.recordset,
     dsKhach: result.recordset,
-    user: req.signedCookies.user
+    // user: req.signedCookies.user
   });
 };
 
@@ -133,7 +133,7 @@ module.exports.getPhong = async (req, res, next) => {
     thuePhongInfo: thuePhongInfo.recordset[0],
     dichVuThue: thuePhongInfo.recordsets[1],
     dsTrangThai: dsTrangThai.recordset,
-    user: req.signedCookies.user,
+    // user: req.signedCookies.user,
     SCNTTP: SCNTTP,
     STK: STK,
     STDV: STDV
@@ -160,7 +160,7 @@ module.exports.getThuePhong = async (req, res, next) => {
     active: "tab1",
     dsThue: dsThuePhong.recordset,
     phong: phong,
-    user: req.signedCookies.user
+    // user: req.signedCookies.user
   });
 };
 
@@ -210,7 +210,7 @@ module.exports.getThemDichVu = async (req, res, next) => {
     active: "tab1",
     dsDichVu: dsDichVu.recordset,
     phong: phong,
-    user: req.signedCookies.user
+    // user: req.signedCookies.user
   });
 };
 
@@ -260,7 +260,7 @@ module.exports.getTraPhong = async (req, res, next) => {
     active: "tab1",
     dsVatTu: dsVatTu.recordset,
     phong: phong,
-    user: req.signedCookies.user
+    // user: req.signedCookies.user
   });
 };
 
@@ -357,7 +357,7 @@ module.exports.postTraPhong = async (req, res, next) => {
     res.render('letan/hoadon', {
       title: 'Vitamion Sea Hotel: Hóa đơn thanh toán',
       active: 'tab1',
-      user: req.signedCookies.user,
+      // user: req.signedCookies.user,
       khach: hoaDon.recordsets[0][0],
       doiTuong: hoaDon.recordsets[1],
       thanhTien: hoaDon.recordsets[2][0]

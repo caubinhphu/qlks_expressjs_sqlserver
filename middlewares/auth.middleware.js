@@ -13,6 +13,7 @@ module.exports.login = async (req, res, next) => {
       var checkLogin = await request.execute('SP_CHECK_LOGIN');
       if (checkLogin.recordset[0].RES) {
         await pool.close();
+        res.locals.user = req.signedCookies.user;
         next();
       } else {
         await pool.close();

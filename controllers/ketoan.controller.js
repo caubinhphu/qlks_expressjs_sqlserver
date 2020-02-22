@@ -22,7 +22,7 @@ module.exports.thuePhong = async (req, res, next) => {
       title: "Vitamin Sea hotel: Danh sách thuê phòng",
       dsPhieuDang: result.recordsets[0],
       dsPhieuDa: result.recordsets[1],
-      user: req.signedCookies.user,
+      // user: req.signedCookies.user,
       SDN: SDN
     });
   } catch (err) {
@@ -42,7 +42,7 @@ module.exports.thueDichVu = async (req, res, next) => {
       title: "Vitamin Sea hotel: Danh sách thuê dịch vụ",
       dsDang: result.recordsets[0],
       dsDa: result.recordsets[1],
-      user: req.signedCookies.user
+      // user: req.signedCookies.user
     });
   } catch (err) {
     next(err);
@@ -68,7 +68,7 @@ module.exports.getInfoPhieu = async (req, res, next) => {
       history: req.headers.referer,
       thanhToan: thanhToan.recordsets[0],
       thanhTien: thanhToan.recordsets[1][0],
-      user: req.signedCookies.user
+      // user: req.signedCookies.user
     });
   } catch (err) {
     next(err);
@@ -137,7 +137,7 @@ module.exports.postDoanhThuNgay = async (req, res, next) => {
       dsDTPhong: doanhThu.recordset,
       tongDT: doanhThu.recordsets[1][0],
       idBaoCaoDoanhThu: idBaoCaoDoanhThu,
-      user: req.signedCookies.user
+      // user: req.signedCookies.user
     });
   } catch (err) {
     next(err);
@@ -178,7 +178,7 @@ module.exports.postDoanhThuThang = async (req, res, next) => {
       dsDTPhong: doanhThu.recordset,
       tongDT: doanhThu.recordsets[1][0],
       idBaoCaoDoanhThu: idBaoCaoDoanhThu,
-      user: req.signedCookies.user
+      // user: req.signedCookies.user
     });
   } catch (err) {
     next(err);
@@ -218,7 +218,7 @@ module.exports.postDoanhThuNam = async (req, res, next) => {
       dsDTPhong: doanhThu.recordset,
       tongDT: doanhThu.recordsets[1][0],
       idBaoCaoDoanhThu: idBaoCaoDoanhThu,
-      user: req.signedCookies.user
+      // user: req.signedCookies.user
     });
   } catch (err) {
     next(err);

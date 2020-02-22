@@ -28,7 +28,7 @@ module.exports.getPhong = async (req, res, next) => {
     dsTrangThai: result.recordsets[1],
     dsLoaiPhong: result.recordsets[2],
     dsTrangThai: dsTrangThai.recordset,
-    user: req.signedCookies.user,
+    // user: req.signedCookies.user,
     SDN: SDN
   });
 };
